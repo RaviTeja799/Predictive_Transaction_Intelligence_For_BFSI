@@ -1,0 +1,413 @@
+================================================================================
+COMPREHENSIVE EDA REPORT - TRANSACTIONS CLEAN DATASET
+Generated on: 2025-11-11 12:32:22
+================================================================================
+
+
+================================================================================
+1. DATA LOADING AND BASIC OVERVIEW
+================================================================================
+
+✅ Dataset loaded successfully!
+Dataset Shape: 5000 rows × 17 columns
+Memory Usage: 1.53 MB
+
+--------------------------------------------------------------------------------
+2. COLUMN INFORMATION
+--------------------------------------------------------------------------------
+
+Column Names and Data Types:
+   1. transaction_id                 → object
+   2. customer_id                    → object
+   3. account_age_days               → int64
+   4. transaction_amount             → float64
+   5. timestamp                      → object
+   6. is_fraud                       → int64
+   7. hour                           → int64
+   8. weekday                        → int64
+   9. month                          → int64
+  10. is_high_value                  → int64
+  11. transaction_amount_log         → float64
+  12. channel_Atm                    → float64
+  13. channel_Mobile                 → float64
+  14. channel_Pos                    → float64
+  15. channel_Web                    → float64
+  16. kyc_verified_No                → float64
+  17. kyc_verified_Yes               → float64
+
+Total Columns: 17
+  - Numeric Columns: 14
+  - Object Columns: 3
+
+--------------------------------------------------------------------------------
+3. MISSING VALUES ANALYSIS
+--------------------------------------------------------------------------------
+
+✅ No missing values found in the dataset!
+
+--------------------------------------------------------------------------------
+4. DUPLICATE RECORDS ANALYSIS
+--------------------------------------------------------------------------------
+
+Total Duplicate Rows: 0
+✅ No duplicate records found!
+
+================================================================================
+5. TARGET VARIABLE ANALYSIS - FRAUD DETECTION
+================================================================================
+
+Fraud Distribution:
+  Legitimate Transactions (0): 4,568 (91.36%)
+  Fraudulent Transactions (1): 432 (8.64%)
+
+  Fraud Rate: 8.64%
+  Class Imbalance Ratio: 1:10.57
+
+📊 Saved: 01_fraud_distribution.png
+
+================================================================================
+6. NUMERICAL FEATURES DETAILED ANALYSIS
+================================================================================
+
+--- ACCOUNT_AGE_DAYS ---
+  Count: 5,000
+  Mean: 1498.91
+  Median: 1481.50
+  Std Dev: 867.62
+  Min: 10.00
+  25th Percentile: 732.00
+  75th Percentile: 2254.25
+  Max: 2999.00
+  IQR: 1522.25
+  Skewness: 0.02
+  Kurtosis: -1.22
+
+--- TRANSACTION_AMOUNT ---
+  Count: 5,000
+  Mean: 39283.32
+  Median: 9670.00
+  Std Dev: 70330.37
+  Min: 1054.00
+  25th Percentile: 6000.50
+  75th Percentile: 20324.75
+  Max: 299992.00
+  IQR: 14324.25
+  Skewness: 2.32
+  Kurtosis: 4.18
+
+--- HOUR ---
+  Count: 5,000
+  Mean: 11.63
+  Median: 12.00
+  Std Dev: 6.84
+  Min: 0.00
+  25th Percentile: 6.00
+  75th Percentile: 17.00
+  Max: 23.00
+  IQR: 11.00
+  Skewness: -0.02
+  Kurtosis: -1.17
+
+--- WEEKDAY ---
+  Count: 5,000
+  Mean: 3.10
+  Median: 3.00
+  Std Dev: 2.08
+  Min: 0.00
+  25th Percentile: 1.00
+  75th Percentile: 5.00
+  Max: 6.00
+  IQR: 4.00
+  Skewness: -0.12
+  Kurtosis: -1.32
+
+--- MONTH ---
+  Count: 5,000
+  Mean: 8.00
+  Median: 8.00
+  Std Dev: 0.00
+  Min: 8.00
+  25th Percentile: 8.00
+  75th Percentile: 8.00
+  Max: 8.00
+  IQR: 0.00
+  Skewness: 0.00
+  Kurtosis: 0.00
+
+--- TRANSACTION_AMOUNT_LOG ---
+  Count: 5,000
+  Mean: 9.55
+  Median: 9.18
+  Std Dev: 1.28
+  Min: 6.96
+  25th Percentile: 8.70
+  75th Percentile: 9.92
+  Max: 12.61
+  IQR: 1.22
+  Skewness: 1.05
+  Kurtosis: 0.17
+
+📊 Saved: 02_numerical_features_analysis.png
+
+================================================================================
+7. FRAUD ANALYSIS BY NUMERICAL FEATURES
+================================================================================
+
+--- TRANSACTION_AMOUNT BY FRAUD STATUS ---
+
+  Legitimate Transactions:
+    Mean: 34769.61
+    Median: 9424.00
+    Std Dev: 65358.83
+
+  Fraudulent Transactions:
+    Mean: 87011.64
+    Median: 16264.50
+    Std Dev: 98013.93
+
+  Difference (Fraud - Legitimate):
+    Mean Difference: 52242.03
+    Median Difference: 6840.50
+
+--- ACCOUNT_AGE_DAYS BY FRAUD STATUS ---
+
+  Legitimate Transactions:
+    Mean: 1504.05
+    Median: 1488.00
+    Std Dev: 868.13
+
+  Fraudulent Transactions:
+    Mean: 1444.49
+    Median: 1404.50
+    Std Dev: 861.32
+
+  Difference (Fraud - Legitimate):
+    Mean Difference: -59.56
+    Median Difference: -83.50
+
+--- HOUR BY FRAUD STATUS ---
+
+  Legitimate Transactions:
+    Mean: 11.62
+    Median: 12.00
+    Std Dev: 6.84
+
+  Fraudulent Transactions:
+    Mean: 11.72
+    Median: 12.00
+    Std Dev: 6.87
+
+  Difference (Fraud - Legitimate):
+    Mean Difference: 0.10
+    Median Difference: 0.00
+
+--- WEEKDAY BY FRAUD STATUS ---
+
+  Legitimate Transactions:
+    Mean: 3.09
+    Median: 3.00
+    Std Dev: 2.08
+
+  Fraudulent Transactions:
+    Mean: 3.17
+    Median: 3.00
+    Std Dev: 2.04
+
+  Difference (Fraud - Legitimate):
+    Mean Difference: 0.08
+    Median Difference: 0.00
+
+📊 Saved: 03_fraud_by_numerical_features.png
+
+================================================================================
+8. CATEGORICAL FEATURES ANALYSIS
+================================================================================
+
+--- TRANSACTION CHANNEL ANALYSIS ---
+  ATM: 490 transactions (9.80%)
+  MOBILE: 1,992 transactions (39.84%)
+  POS: 784 transactions (15.68%)
+  WEB: 1,734 transactions (34.68%)
+
+--- KYC VERIFICATION ANALYSIS ---
+  No: 790 transactions (15.80%)
+  Yes: 4,210 transactions (84.20%)
+
+📊 Saved: 04_categorical_features_analysis.png
+
+--- FRAUD RATE BY CHANNEL ---
+  ATM: 6.53%
+  MOBILE: 9.59%
+  POS: 7.40%
+  WEB: 8.71%
+
+--- FRAUD RATE BY KYC STATUS ---
+  No: 21.52%
+  Yes: 6.22%
+
+================================================================================
+9. HIGH VALUE TRANSACTIONS ANALYSIS
+================================================================================
+
+High Value Transactions: 882 (17.64%)
+Regular Transactions: 4,118 (82.36%)
+
+Fraud Rate in High Value Transactions: 21.20%
+Fraud Rate in Regular Transactions: 5.95%
+Difference: 15.25 percentage points
+
+📊 Saved: 05_high_value_transactions_analysis.png
+
+================================================================================
+10. TIME SERIES ANALYSIS
+================================================================================
+
+Date Range:
+  Start Date: 2025-08-01 00:19:59
+  End Date: 2025-08-25 23:54:05
+  Duration: 24 days
+
+Daily Transaction Statistics:
+  Average Daily Transactions: 200
+  Average Daily Transaction Volume: $7,856,664
+  Average Daily Fraud Cases: 17.3
+  Average Daily Fraud Rate: 8.63%
+
+📊 Saved: 06_time_series_analysis.png
+
+================================================================================
+11. CORRELATION ANALYSIS
+================================================================================
+
+Correlation with Fraud (is_fraud):
+  transaction_amount            :  0.2087
+  is_high_value                 :  0.2069
+  transaction_amount_log        :  0.1916
+  weekday                       :  0.0107
+  hour                          :  0.0041
+  account_age_days              : -0.0193
+  month                         :     nan
+
+Top 10 Strongest Correlations (excluding self-correlation):
+   1. account_age_days          ↔ month                    :     nan
+   2. transaction_amount        ↔ month                    :     nan
+   3. transaction_amount        ↔ transaction_amount_log   :  0.8917
+   4. transaction_amount        ↔ is_high_value            :  0.8916
+   5. transaction_amount        ↔ is_fraud                 :  0.2087
+   6. account_age_days          ↔ hour                     : -0.0253
+   7. transaction_amount        ↔ weekday                  : -0.0245
+   8. account_age_days          ↔ is_fraud                 : -0.0193
+   9. hour                      ↔ month                    :     nan
+  10. hour                      ↔ transaction_amount_log   : -0.0124
+
+📊 Saved: 07_correlation_analysis.png
+
+================================================================================
+12. OUTLIER ANALYSIS
+================================================================================
+
+--- TRANSACTION_AMOUNT OUTLIERS ---
+  Lower Bound: -15485.88
+  Upper Bound: 41811.12
+  Number of Outliers: 916 (18.32%)
+  Outliers in Fraud Cases: 187 (20.41% of outliers)
+
+--- ACCOUNT_AGE_DAYS OUTLIERS ---
+  Lower Bound: -1551.38
+  Upper Bound: 4537.62
+  Number of Outliers: 0 (0.00%)
+  Outliers in Fraud Cases: 0 (nan% of outliers)
+
+📊 Saved: 08_outlier_analysis.png
+
+================================================================================
+13. COMPREHENSIVE SUMMARY & KEY INSIGHTS
+================================================================================
+
+📊 DATASET OVERVIEW:
+  • Total Transactions: 5,000
+  • Total Features: 19
+  • Date Range: 2025-08-01 to 2025-08-25
+  • Duration: 24 days
+
+🚨 FRAUD DETECTION METRICS:
+  • Fraudulent Transactions: 187 (8.64%)
+  • Legitimate Transactions: 245 (91.36%)
+  • Class Imbalance Ratio: 1:1.31
+
+💰 TRANSACTION AMOUNT INSIGHTS:
+  • Average Amount: $39,283.32
+  • Median Amount: $9,670.00
+  • Total Volume: $196,416,605.00
+  • Average Fraud Amount: $87,011.64
+  • Average Legitimate Amount: $34,769.61
+
+👤 ACCOUNT AGE INSIGHTS:
+  • Average Account Age: 1499 days
+  • Median Account Age: 1482 days
+  • Average Age (Fraud): 1444 days
+  • Average Age (Legitimate): 1504 days
+
+📱 CHANNEL INSIGHTS:
+  • MOBILE: 1,992 transactions, 9.59% fraud rate
+  • WEB: 1,734 transactions, 8.71% fraud rate
+  • POS: 784 transactions, 7.40% fraud rate
+  • ATM: 490 transactions, 6.53% fraud rate
+
+✅ KYC VERIFICATION INSIGHTS:
+  • No: 790 transactions, 21.52% fraud rate
+  • Yes: 4,210 transactions, 6.22% fraud rate
+
+💎 HIGH VALUE TRANSACTION INSIGHTS:
+  • High Value Transactions: 882 (17.64%)
+  • High Value Fraud Rate: 21.20%
+  • Regular Transaction Fraud Rate: 5.95%
+  • Risk Difference: 15.25 percentage points higher in high-value transactions
+
+⏰ TEMPORAL INSIGHTS:
+  • Peak Transaction Hour: 12:00 (230 transactions)
+  • Most Fraud-Prone Hour: 19:00 (12.16% fraud rate)
+  • Busiest Day: Monday
+  • Most Fraud-Prone Day: Thursday (10.44% fraud rate)
+
+🔗 CORRELATION INSIGHTS:
+  • Top 3 Features Correlated with Fraud:
+    1. transaction_amount: 0.2087 (positively correlated)
+    2. is_high_value: 0.2069 (positively correlated)
+    3. transaction_amount_log: 0.1916 (positively correlated)
+
+🎯 KEY RISK FACTORS:
+  1. Non-KYC verified accounts (21.52% vs 6.22% fraud rate)
+  2. High-value transactions (21.20% vs 5.95% fraud rate)
+  3. MOBILE channel (9.59% fraud rate)
+
+💡 RECOMMENDATIONS:
+  1. Implement enhanced verification for non-KYC verified accounts
+  2. Apply stricter monitoring for high-value transactions
+  3. Focus fraud detection resources on MOBILE channel
+  4. Increase surveillance during hour 19:00 (peak fraud time)
+  5. Consider implementing dynamic risk scoring based on multiple factors
+  6. Investigate accounts with age < 1 year (higher fraud correlation)
+
+================================================================================
+EDA COMPLETE - ALL ANALYSES SAVED SUCCESSFULLY
+================================================================================
+
+📁 Generated Files:
+  📝 Text Output:
+     • eda_analysis_report.txt (This comprehensive report)
+
+  📊 Visualizations:
+     • 01_fraud_distribution.png
+     • 02_numerical_features_analysis.png
+     • 03_fraud_by_numerical_features.png
+     • 04_categorical_features_analysis.png
+     • 05_high_value_transactions_analysis.png
+     • 06_time_series_analysis.png
+     • 07_correlation_analysis.png
+     • 08_outlier_analysis.png
+
+⏱️  Analysis completed at: 2025-11-11 12:32:36
+
+================================================================================
+

@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+myenv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data files
+*.csv
+*.xlsx
+*.db
+*.sqlite
+
+# Model files
+*.pkl
+*.h5
+*.pt
+*.pth
+
+# Outputs
+backend/outputs/eda_reports/*.png
+backend/outputs/eda_reports/*.txt
+backend/outputs/models/*.pkl
+backend/outputs/logs/*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env.local
+
+# Logs
+*.log
+logs/
+
+# Old structure (to be removed)
+EDA/
+Infosys-springboard-project/
+trans-intelliflow-main/

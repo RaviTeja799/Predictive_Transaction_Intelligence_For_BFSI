@@ -143,60 +143,62 @@ const Customer360 = () => {
       title="Customer 360° Profile"
       subtitle="Comprehensive customer view and behavior analysis"
     >
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <Card>
-          <CardHeader>
-            <CardTitle>Customer List</CardTitle>
+          <CardHeader className="pb-2 sm:pb-6">
+            <CardTitle className="text-base sm:text-lg">Customer List</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0 sm:p-6">
             <ScrollArea className="h-[calc(100vh-250px)]">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Customer ID</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Transactions</TableHead>
-                    <TableHead>Lifetime Value</TableHead>
-                    <TableHead>Risk Level</TableHead>
-                    <TableHead>Fraud Incidents</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {customers?.map((customer) => (
-                    <TableRow
-                      key={customer.customer_id}
-                      onClick={() => setSelectedCustomer(customer)}
-                      className="cursor-pointer hover:bg-muted"
-                    >
-                      <TableCell className="font-mono text-sm">{customer.customer_id}</TableCell>
-                      <TableCell>{customer.name}</TableCell>
-                      <TableCell>{customer.email}</TableCell>
-                      <TableCell>{customer.total_transactions ?? 0}</TableCell>
-                      <TableCell>₹{(customer.lifetime_value ?? 0).toLocaleString()}</TableCell>
-                      <TableCell>
-                        <Badge className={getRiskColor(customer.risk_level)}>
-                          {customer.risk_level}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {customer.fraud_incidents > 0 ? (
-                          <Badge variant="destructive">{customer.fraud_incidents}</Badge>
-                        ) : (
-                          <Badge variant="outline">0</Badge>
-                        )}
-                      </TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-xs sm:text-sm">ID</TableHead>
+                      <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Name</TableHead>
+                      <TableHead className="text-xs sm:text-sm hidden md:table-cell">Email</TableHead>
+                      <TableHead className="text-xs sm:text-sm">Txns</TableHead>
+                      <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Value</TableHead>
+                      <TableHead className="text-xs sm:text-sm">Risk</TableHead>
+                      <TableHead className="text-xs sm:text-sm">Fraud</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {customers?.map((customer) => (
+                      <TableRow
+                        key={customer.customer_id}
+                        onClick={() => setSelectedCustomer(customer)}
+                        className="cursor-pointer hover:bg-muted"
+                      >
+                        <TableCell className="font-mono text-[10px] sm:text-sm">{customer.customer_id}</TableCell>
+                        <TableCell className="hidden sm:table-cell text-sm">{customer.name}</TableCell>
+                        <TableCell className="hidden md:table-cell text-xs sm:text-sm">{customer.email}</TableCell>
+                        <TableCell className="text-xs sm:text-sm">{customer.total_transactions ?? 0}</TableCell>
+                        <TableCell className="hidden sm:table-cell text-xs sm:text-sm">₹{(customer.lifetime_value ?? 0).toLocaleString()}</TableCell>
+                        <TableCell>
+                          <Badge className={`${getRiskColor(customer.risk_level)} text-[10px] sm:text-xs`}>
+                            {customer.risk_level}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {customer.fraud_incidents > 0 ? (
+                            <Badge variant="destructive" className="text-[10px] sm:text-xs">{customer.fraud_incidents}</Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-[10px] sm:text-xs">0</Badge>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </ScrollArea>
           </CardContent>
         </Card>
       </div>
 
       <Dialog open={!!selectedCustomer} onOpenChange={(open) => !open && setSelectedCustomer(null)}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-[95vw] sm:max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Customer Profile - {selectedCustomer?.customer_id}</DialogTitle>
           </DialogHeader>

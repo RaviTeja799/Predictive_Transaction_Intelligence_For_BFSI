@@ -152,12 +152,13 @@ const CaseManagement = () => {
       actions={
         <Dialog open={newCaseOpen} onOpenChange={setNewCaseOpen}>
           <DialogTrigger asChild>
-            <Button size="sm">
+            <Button size="sm" className="w-full sm:w-auto">
               <Plus className="mr-2 h-4 w-4" />
-              New Case
+              <span className="hidden sm:inline">New Case</span>
+              <span className="sm:hidden">New</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-[95vw] sm:max-w-2xl">
             <DialogHeader>
               <DialogTitle>Create Investigation Case</DialogTitle>
             </DialogHeader>

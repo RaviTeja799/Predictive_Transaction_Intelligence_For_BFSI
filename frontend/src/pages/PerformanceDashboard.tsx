@@ -98,72 +98,72 @@ const PerformanceDashboard = () => {
       }
     >
       {/* System Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6">
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Activity className="h-4 w-4" />
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <Activity className="h-3 w-3 sm:h-4 sm:w-4" />
               Total Predictions
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">{stats.total.toLocaleString()}</p>
+          <CardContent className="pt-0">
+            <p className="text-2xl sm:text-3xl font-bold">{stats.total.toLocaleString()}</p>
             <p className="text-xs text-muted-foreground mt-1">All time</p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Target className="h-4 w-4" />
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <Target className="h-3 w-3 sm:h-4 sm:w-4" />
               Fraud Detected
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-red-600">{stats.fraudCount.toLocaleString()}</p>
+          <CardContent className="pt-0">
+            <p className="text-2xl sm:text-3xl font-bold text-red-600">{stats.fraudCount.toLocaleString()}</p>
             <p className="text-xs text-muted-foreground mt-1">
               {stats.total > 0 ? ((stats.fraudCount / stats.total) * 100).toFixed(1) : 0}% fraud rate
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Zap className="h-4 w-4" />
+        <Card className="sm:col-span-2 lg:col-span-1">
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <Zap className="h-3 w-3 sm:h-4 sm:w-4" />
               Avg Risk Score
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">{(stats.avgRiskScore * 100).toFixed(1)}%</p>
+          <CardContent className="pt-0">
+            <p className="text-2xl sm:text-3xl font-bold">{(stats.avgRiskScore * 100).toFixed(1)}%</p>
             <p className="text-xs text-muted-foreground mt-1">Across all predictions</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Model Information */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle>Model Information</CardTitle>
-          <CardDescription>Details about the fraud detection model</CardDescription>
+      <Card className="mb-4 sm:mb-6">
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="text-base sm:text-lg">Model Information</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Details about the fraud detection model</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">Model Type</p>
-              <p className="text-lg font-semibold">Random Forest</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Model Type</p>
+              <p className="text-sm sm:text-lg font-semibold">Random Forest</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Version</p>
-              <p className="text-lg font-semibold">{metrics?.model_version || "1.0"}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Version</p>
+              <p className="text-sm sm:text-lg font-semibold">{metrics?.model_version || "1.0"}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Features</p>
-              <p className="text-lg font-semibold">13</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Features</p>
+              <p className="text-sm sm:text-lg font-semibold">13</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Business Rules</p>
-              <p className="text-lg font-semibold">6 Active</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Business Rules</p>
+              <p className="text-sm sm:text-lg font-semibold">6 Active</p>
             </div>
           </div>
         </CardContent>
@@ -171,27 +171,27 @@ const PerformanceDashboard = () => {
 
       {/* Performance Metrics */}
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
             Model Performance Metrics
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-xs sm:text-sm">
             Evaluation metrics from model training and validation
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Accuracy */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Accuracy</span>
-                  <Badge variant="secondary">
+              <div className="flex items-center justify-between flex-wrap gap-1">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <span className="font-medium text-sm sm:text-base">Accuracy</span>
+                  <Badge variant="secondary" className="text-xs">
                     {getScoreBadge(metrics?.accuracy || 0)}
                   </Badge>
                 </div>
-                <span className={`text-2xl font-bold ${getScoreColor(metrics?.accuracy || 0)}`}>
+                <span className={`text-lg sm:text-2xl font-bold ${getScoreColor(metrics?.accuracy || 0)}`}>
                   {((metrics?.accuracy || 0) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -203,14 +203,14 @@ const PerformanceDashboard = () => {
 
             {/* Precision */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Precision</span>
-                  <Badge variant="secondary">
+              <div className="flex items-center justify-between flex-wrap gap-1">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <span className="font-medium text-sm sm:text-base">Precision</span>
+                  <Badge variant="secondary" className="text-xs">
                     {getScoreBadge(metrics?.precision || 0)}
                   </Badge>
                 </div>
-                <span className={`text-2xl font-bold ${getScoreColor(metrics?.precision || 0)}`}>
+                <span className={`text-lg sm:text-2xl font-bold ${getScoreColor(metrics?.precision || 0)}`}>
                   {((metrics?.precision || 0) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -222,14 +222,14 @@ const PerformanceDashboard = () => {
 
             {/* Recall */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Recall</span>
-                  <Badge variant="secondary">
+              <div className="flex items-center justify-between flex-wrap gap-1">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <span className="font-medium text-sm sm:text-base">Recall</span>
+                  <Badge variant="secondary" className="text-xs">
                     {getScoreBadge(metrics?.recall || 0)}
                   </Badge>
                 </div>
-                <span className={`text-2xl font-bold ${getScoreColor(metrics?.recall || 0)}`}>
+                <span className={`text-lg sm:text-2xl font-bold ${getScoreColor(metrics?.recall || 0)}`}>
                   {((metrics?.recall || 0) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -241,14 +241,14 @@ const PerformanceDashboard = () => {
 
             {/* F1 Score */}
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">F1 Score</span>
-                  <Badge variant="secondary">
+              <div className="flex items-center justify-between flex-wrap gap-1">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <span className="font-medium text-sm sm:text-base">F1 Score</span>
+                  <Badge variant="secondary" className="text-xs">
                     {getScoreBadge(metrics?.f1_score || 0)}
                   </Badge>
                 </div>
-                <span className={`text-2xl font-bold ${getScoreColor(metrics?.f1_score || 0)}`}>
+                <span className={`text-lg sm:text-2xl font-bold ${getScoreColor(metrics?.f1_score || 0)}`}>
                   {((metrics?.f1_score || 0) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -261,14 +261,14 @@ const PerformanceDashboard = () => {
             {/* ROC AUC */}
             {metrics?.roc_auc && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">ROC AUC</span>
-                    <Badge variant="secondary">
+                <div className="flex items-center justify-between flex-wrap gap-1">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <span className="font-medium text-sm sm:text-base">ROC AUC</span>
+                    <Badge variant="secondary" className="text-xs">
                       {getScoreBadge(metrics.roc_auc)}
                     </Badge>
                   </div>
-                  <span className={`text-2xl font-bold ${getScoreColor(metrics.roc_auc)}`}>
+                  <span className={`text-lg sm:text-2xl font-bold ${getScoreColor(metrics.roc_auc)}`}>
                     {(metrics.roc_auc * 100).toFixed(1)}%
                   </span>
                 </div>
@@ -283,68 +283,68 @@ const PerformanceDashboard = () => {
       </Card>
 
       {/* Business Rules */}
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle>Active Business Rules</CardTitle>
-          <CardDescription>Rule-based fraud detection logic combined with ML model</CardDescription>
+      <Card className="mt-4 sm:mt-6">
+        <CardHeader className="pb-2 sm:pb-4">
+          <CardTitle className="text-base sm:text-lg">Active Business Rules</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Rule-based fraud detection logic combined with ML model</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3 p-3 rounded-lg border bg-muted/50">
-              <Badge variant="outline" className="mt-0.5">1</Badge>
-              <div className="flex-1">
-                <p className="font-medium text-sm">High Value New Account</p>
-                <p className="text-xs text-muted-foreground">
+          <div className="space-y-2 sm:space-y-3">
+            <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border bg-muted/50">
+              <Badge variant="outline" className="mt-0.5 text-xs">1</Badge>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-xs sm:text-sm">High Value New Account</p>
+                <p className="text-xs text-muted-foreground truncate sm:text-clip">
                   Amount &gt; ₹10,000 AND Account Age &lt; 30 days
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg border bg-muted/50">
-              <Badge variant="outline" className="mt-0.5">2</Badge>
-              <div className="flex-1">
-                <p className="font-medium text-sm">Unverified KYC High Amount</p>
-                <p className="text-xs text-muted-foreground">
+            <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border bg-muted/50">
+              <Badge variant="outline" className="mt-0.5 text-xs">2</Badge>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-xs sm:text-sm">Unverified KYC High Amount</p>
+                <p className="text-xs text-muted-foreground truncate sm:text-clip">
                   KYC Not Verified AND Amount &gt; ₹5,000
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg border bg-muted/50">
-              <Badge variant="outline" className="mt-0.5">3</Badge>
-              <div className="flex-1">
-                <p className="font-medium text-sm">Unusual Hour Transaction</p>
-                <p className="text-xs text-muted-foreground">
+            <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border bg-muted/50">
+              <Badge variant="outline" className="mt-0.5 text-xs">3</Badge>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-xs sm:text-sm">Unusual Hour Transaction</p>
+                <p className="text-xs text-muted-foreground truncate sm:text-clip">
                   Hour between 2 AM - 5 AM AND Amount &gt; ₹3,000
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg border bg-muted/50">
-              <Badge variant="outline" className="mt-0.5">4</Badge>
-              <div className="flex-1">
-                <p className="font-medium text-sm">Very High Amount</p>
-                <p className="text-xs text-muted-foreground">
+            <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border bg-muted/50">
+              <Badge variant="outline" className="mt-0.5 text-xs">4</Badge>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-xs sm:text-sm">Very High Amount</p>
+                <p className="text-xs text-muted-foreground truncate sm:text-clip">
                   Amount &gt; ₹50,000 (Automatic Flag)
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg border bg-muted/50">
-              <Badge variant="outline" className="mt-0.5">5</Badge>
-              <div className="flex-1">
-                <p className="font-medium text-sm">New Account Unverified</p>
-                <p className="text-xs text-muted-foreground">
+            <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border bg-muted/50">
+              <Badge variant="outline" className="mt-0.5 text-xs">5</Badge>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-xs sm:text-sm">New Account Unverified</p>
+                <p className="text-xs text-muted-foreground truncate sm:text-clip">
                   Account Age &lt; 7 days AND KYC Not Verified
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg border bg-muted/50">
-              <Badge variant="outline" className="mt-0.5">6</Badge>
-              <div className="flex-1">
-                <p className="font-medium text-sm">High ATM Withdrawal</p>
-                <p className="text-xs text-muted-foreground">
+            <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg border bg-muted/50">
+              <Badge variant="outline" className="mt-0.5 text-xs">6</Badge>
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-xs sm:text-sm">High ATM Withdrawal</p>
+                <p className="text-xs text-muted-foreground truncate sm:text-clip">
                   Channel = ATM/POS AND Amount &gt; ₹20,000
                 </p>
               </div>

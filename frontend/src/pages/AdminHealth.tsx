@@ -211,25 +211,25 @@ const AdminHealth = () => {
       subtitle="System monitoring, user management, and service status"
     >
       <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">System Overview</TabsTrigger>
-          <TabsTrigger value="jobs">Background Jobs</TabsTrigger>
-          <TabsTrigger value="users">User Management</TabsTrigger>
-          <TabsTrigger value="services">Service Status</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-1">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm py-2">System Overview</TabsTrigger>
+          <TabsTrigger value="jobs" className="text-xs sm:text-sm py-2">Background Jobs</TabsTrigger>
+          <TabsTrigger value="users" className="text-xs sm:text-sm py-2">User Management</TabsTrigger>
+          <TabsTrigger value="services" className="text-xs sm:text-sm py-2">Service Status</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Activity className="h-4 w-4" />
+              <CardHeader className="pb-2 p-3 sm:p-6">
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1 sm:gap-2">
+                  <Activity className="h-3 w-3 sm:h-4 sm:w-4" />
                   CPU Usage
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-0 p-3 sm:p-6">
                 <div className="space-y-2">
-                  <p className="text-2xl font-bold">{(systemHealth?.cpu_usage ?? 0).toFixed(1)}%</p>
+                  <p className="text-lg sm:text-2xl font-bold">{(systemHealth?.cpu_usage ?? 0).toFixed(1)}%</p>
                   <Progress
                     value={systemHealth?.cpu_usage || 0}
                     className={getResourceColor(systemHealth?.cpu_usage || 0)}
@@ -239,15 +239,15 @@ const AdminHealth = () => {
             </Card>
 
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <HardDrive className="h-4 w-4" />
+              <CardHeader className="pb-2 p-3 sm:p-6">
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1 sm:gap-2">
+                  <HardDrive className="h-3 w-3 sm:h-4 sm:w-4" />
                   Memory Usage
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-0 p-3 sm:p-6">
                 <div className="space-y-2">
-                  <p className="text-2xl font-bold">{(systemHealth?.memory_usage ?? 0).toFixed(1)}%</p>
+                  <p className="text-lg sm:text-2xl font-bold">{(systemHealth?.memory_usage ?? 0).toFixed(1)}%</p>
                   <Progress
                     value={systemHealth?.memory_usage || 0}
                     className={getResourceColor(systemHealth?.memory_usage || 0)}
@@ -257,15 +257,15 @@ const AdminHealth = () => {
             </Card>
 
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Database className="h-4 w-4" />
+              <CardHeader className="pb-2 p-3 sm:p-6">
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1 sm:gap-2">
+                  <Database className="h-3 w-3 sm:h-4 sm:w-4" />
                   Disk Usage
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-0 p-3 sm:p-6">
                 <div className="space-y-2">
-                  <p className="text-2xl font-bold">{(systemHealth?.disk_usage ?? 0).toFixed(1)}%</p>
+                  <p className="text-lg sm:text-2xl font-bold">{(systemHealth?.disk_usage ?? 0).toFixed(1)}%</p>
                   <Progress
                     value={systemHealth?.disk_usage || 0}
                     className={getResourceColor(systemHealth?.disk_usage || 0)}
@@ -275,38 +275,38 @@ const AdminHealth = () => {
             </Card>
 
             <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Server className="h-4 w-4" />
+              <CardHeader className="pb-2 p-3 sm:p-6">
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1 sm:gap-2">
+                  <Server className="h-3 w-3 sm:h-4 sm:w-4" />
                   API Latency
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold">{(systemHealth?.api_latency ?? 0).toFixed(0)}ms</p>
-                <p className="text-sm text-muted-foreground">Avg response time</p>
+              <CardContent className="pt-0 p-3 sm:p-6">
+                <p className="text-lg sm:text-2xl font-bold">{(systemHealth?.api_latency ?? 0).toFixed(0)}ms</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Avg response time</p>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                  <Activity className="h-4 w-4" />
+            <Card className="col-span-2 sm:col-span-1">
+              <CardHeader className="pb-2 p-3 sm:p-6">
+                <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1 sm:gap-2">
+                  <Activity className="h-3 w-3 sm:h-4 sm:w-4" />
                   Requests/min
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-2xl font-bold">{systemHealth?.requests_per_minute ?? 0}</p>
-                <p className="text-sm text-muted-foreground">Current throughput</p>
+              <CardContent className="pt-0 p-3 sm:p-6">
+                <p className="text-lg sm:text-2xl font-bold">{systemHealth?.requests_per_minute ?? 0}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Current throughput</p>
               </CardContent>
             </Card>
           </div>
 
           <Card>
-            <CardHeader>
-              <CardTitle>Performance History</CardTitle>
+            <CardHeader className="pb-2 sm:pb-4">
+              <CardTitle className="text-base sm:text-lg">Performance History</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={200} className="sm:!h-[300px]">
                 <LineChart data={performanceHistory}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="time" />
@@ -323,11 +323,11 @@ const AdminHealth = () => {
 
         <TabsContent value="jobs" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Background Jobs</CardTitle>
+            <CardHeader className="pb-2 sm:pb-4">
+              <CardTitle className="text-base sm:text-lg">Background Jobs</CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-[600px]">
+              <ScrollArea className="h-[400px] sm:h-[600px]">
                 <div className="space-y-3">
                   {backgroundJobs?.map((job) => (
                     <Card key={job.job_id} className="border-l-4 border-l-primary">
@@ -378,47 +378,47 @@ const AdminHealth = () => {
 
         <TabsContent value="users" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
+            <CardHeader className="pb-2 sm:pb-4">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 User Accounts
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>User ID</TableHead>
+                    <TableHead className="hidden lg:table-cell">User ID</TableHead>
                     <TableHead>Username</TableHead>
-                    <TableHead>Email</TableHead>
+                    <TableHead className="hidden sm:table-cell">Email</TableHead>
                     <TableHead>Role</TableHead>
                     <TableHead>Status</TableHead>
-                    <TableHead>Last Login</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead className="hidden md:table-cell">Last Login</TableHead>
+                    <TableHead className="hidden sm:table-cell">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {users?.map((user) => (
                     <TableRow key={user.id}>
-                      <TableCell className="font-mono text-sm">{user.id}</TableCell>
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>{user.email}</TableCell>
+                      <TableCell className="font-mono text-sm hidden lg:table-cell">{user.id}</TableCell>
+                      <TableCell className="text-xs sm:text-sm">{user.username}</TableCell>
+                      <TableCell className="hidden sm:table-cell text-xs sm:text-sm">{user.email}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{user.role}</Badge>
+                        <Badge variant="outline" className="text-xs">{user.role}</Badge>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 sm:gap-2">
                           {getStatusIcon(user.status)}
-                          <Badge className={getStatusColor(user.status)}>{user.status}</Badge>
+                          <Badge className={`${getStatusColor(user.status)} text-xs`}>{user.status}</Badge>
                         </div>
                       </TableCell>
-                      <TableCell className="text-sm">
+                      <TableCell className="text-xs sm:text-sm hidden md:table-cell">
                         {new Date(user.last_login).toLocaleString()}
                       </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button size="sm" variant="outline">Edit</Button>
-                          <Button size="sm" variant="ghost">Reset</Button>
+                      <TableCell className="hidden sm:table-cell">
+                        <div className="flex gap-1 sm:gap-2">
+                          <Button size="sm" variant="outline" className="text-xs h-7 px-2">Edit</Button>
+                          <Button size="sm" variant="ghost" className="text-xs h-7 px-2">Reset</Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -431,28 +431,28 @@ const AdminHealth = () => {
 
         <TabsContent value="services" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Server className="h-5 w-5" />
+            <CardHeader className="pb-2 sm:pb-4">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <Server className="h-4 w-4 sm:h-5 sm:w-5" />
                 Service Health
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-2 sm:space-y-4">
                 {services?.map((service) => (
                   <Card key={service.name}>
-                    <CardContent className="pt-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
+                    <CardContent className="pt-3 sm:pt-4 p-3 sm:p-6">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                           {getStatusIcon(service.status)}
-                          <div>
-                            <p className="font-medium">{service.name}</p>
-                            <p className="text-sm text-muted-foreground">Uptime: {service.uptime}</p>
+                          <div className="min-w-0">
+                            <p className="font-medium text-sm sm:text-base truncate">{service.name}</p>
+                            <p className="text-xs sm:text-sm text-muted-foreground">Uptime: {service.uptime}</p>
                           </div>
                         </div>
-                        <div className="text-right">
-                          <Badge className={getStatusColor(service.status)}>{service.status}</Badge>
-                          <p className="text-sm text-muted-foreground mt-1">Latency: {service.latency}ms</p>
+                        <div className="text-right shrink-0">
+                          <Badge className={`${getStatusColor(service.status)} text-xs`}>{service.status}</Badge>
+                          <p className="text-xs sm:text-sm text-muted-foreground mt-1">{service.latency}ms</p>
                         </div>
                       </div>
                     </CardContent>

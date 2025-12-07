@@ -290,24 +290,25 @@ const SimulationLab = () => {
       title="Simulation Lab"
       subtitle="Stress-test the model with synthetic traffic"
       actions={
-        <div className="flex gap-2">
-          <Button size="sm" onClick={runSimulation} disabled={running}>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <Button size="sm" onClick={runSimulation} disabled={running} className="w-full sm:w-auto">
             <Activity className="mr-2 h-4 w-4" />
-            {running ? "Running" : "Start Simulation"}
+            {running ? "Running..." : "Start"}
           </Button>
           <Button 
             size="sm" 
             variant={saved ? "default" : "outline"}
             onClick={saveToMongoDB} 
             disabled={saving || completedRecords.length === 0 || running}
+            className="w-full sm:w-auto"
           >
             <Database className="mr-2 h-4 w-4" />
-            {saving ? "Saving..." : saved ? "Saved ✓" : "Save to MongoDB"}
+            {saving ? "Saving..." : saved ? "Saved ✓" : "Save to DB"}
           </Button>
         </div>
       }
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
         <MetricCard
           title="Processed"
           value={`${summary.completed}/${batchSize}`}
@@ -333,12 +334,12 @@ const SimulationLab = () => {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Simulation Controls</CardTitle>
+        <CardHeader className="pb-3 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg">Simulation Controls</CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="batchSize">Transactions</Label>
+        <CardContent className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="batchSize" className="text-sm">Transactions</Label>
             <Input
               id="batchSize"
               type="number"
@@ -346,10 +347,11 @@ const SimulationLab = () => {
               max={500}
               value={batchSize}
               onChange={(event) => setBatchSize(Number(event.target.value))}
+              className="text-sm"
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="concurrency">Parallel Calls</Label>
+          <div className="space-y-1.5 sm:space-y-2">
+            <Label htmlFor="concurrency" className="text-sm">Parallel</Label>
             <Input
               id="concurrency"
               type="number"
@@ -357,10 +359,11 @@ const SimulationLab = () => {
               max={20}
               value={concurrency}
               onChange={(event) => setConcurrency(Number(event.target.value))}
+              className="text-sm"
             />
           </div>
-          <div className="space-y-2">
-            <Label>Status</Label>
+          <div className="space-y-1.5 sm:space-y-2 col-span-2 sm:col-span-1">
+            <Label className="text-sm">Status</Label>
             <div className="space-y-1">
               <Progress value={progress} />
               <p className="text-xs text-muted-foreground">{progress}% complete</p>
@@ -369,14 +372,14 @@ const SimulationLab = () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         <Card>
-          <CardHeader>
-            <CardTitle>Risk Distribution</CardTitle>
+          <CardHeader className="pb-2 sm:pb-6">
+            <CardTitle className="text-base sm:text-lg">Risk Distribution</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={280}>
-              <AreaChart data={riskSeries}>
+          <CardContent className="h-[200px] sm:h-auto">
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={riskSeries} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="index" tick={false} />
                 <Tooltip />
@@ -386,26 +389,26 @@ const SimulationLab = () => {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+          <CardHeader className="pb-2 sm:pb-6">
+            <CardTitle className="text-base sm:text-lg">Recent Activity</CardTitle>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="h-64 pr-4">
-              <div className="space-y-3">
+            <ScrollArea className="h-52 sm:h-64 pr-2 sm:pr-4">
+              <div className="space-y-2 sm:space-y-3">
                 {recentLog.map((record) => (
-                  <div key={record.id} className="flex items-center justify-between gap-4 border rounded-md p-3">
-                    <div>
-                      <p className="font-mono text-sm">{record.payload.customer_id}</p>
-                      <p className="text-xs text-muted-foreground">
+                  <div key={record.id} className="flex items-center justify-between gap-2 sm:gap-4 border rounded-md p-2 sm:p-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-mono text-xs sm:text-sm truncate">{record.payload.customer_id}</p>
+                      <p className="text-[10px] sm:text-xs text-muted-foreground">
                         ₹{record.payload.amount.toLocaleString()} • {record.payload.channel}
                       </p>
                     </div>
                     {record.status === "success" && record.prediction ? (
-                      <Badge variant={record.prediction.prediction === "Fraud" ? "destructive" : "default"}>
-                        {record.prediction.prediction} | {((record.prediction.risk_score ?? record.prediction.fraud_probability ?? 0) * 100).toFixed(1)}%
+                      <Badge variant={record.prediction.prediction === "Fraud" ? "destructive" : "default"} className="text-[10px] sm:text-xs shrink-0">
+                        {record.prediction.prediction} | {((record.prediction.risk_score ?? record.prediction.fraud_probability ?? 0) * 100).toFixed(0)}%
                       </Badge>
                     ) : (
-                      <Badge variant="outline">Error</Badge>
+                      <Badge variant="outline" className="text-[10px] sm:text-xs">Error</Badge>
                     )}
                   </div>
                 ))}
@@ -416,42 +419,42 @@ const SimulationLab = () => {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Simulation Results</CardTitle>
+        <CardHeader className="pb-2 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg">Simulation Results</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto -mx-4 sm:mx-0">
+            <table className="w-full text-xs sm:text-sm min-w-[600px]">
               <thead>
                 <tr className="text-left text-muted-foreground">
-                  <th className="pb-2">#</th>
+                  <th className="pb-2 pl-4 sm:pl-0">#</th>
                   <th>Transaction ID</th>
                   <th>Amount</th>
-                  <th>Channel</th>
-                  <th>Timestamp</th>
+                  <th className="hidden sm:table-cell">Channel</th>
+                  <th className="hidden md:table-cell">Timestamp</th>
                   <th>Prediction</th>
-                  <th>Probability</th>
+                  <th>Prob</th>
                 </tr>
               </thead>
               <tbody>
                 {completedRecords.map((record, idx) => (
                   <tr key={record.id} className="border-t">
-                    <td className="py-2">{idx + 1}</td>
-                    <td className="font-mono">{record.payload.customer_id}</td>
+                    <td className="py-2 pl-4 sm:pl-0">{idx + 1}</td>
+                    <td className="font-mono truncate max-w-[100px]">{record.payload.customer_id}</td>
                     <td>₹{record.payload.amount.toLocaleString()}</td>
-                    <td>{record.payload.channel}</td>
-                    <td>{formatTimestamp(record.prediction?.timestamp || record.payload.timestamp)}</td>
+                    <td className="hidden sm:table-cell">{record.payload.channel}</td>
+                    <td className="hidden md:table-cell">{formatTimestamp(record.prediction?.timestamp || record.payload.timestamp)}</td>
                     <td>
                       {record.prediction ? (
-                        <Badge variant={record.prediction.prediction === "Fraud" ? "destructive" : "default"}>
+                        <Badge variant={record.prediction.prediction === "Fraud" ? "destructive" : "default"} className="text-[10px] sm:text-xs">
                           {record.prediction.prediction}
                         </Badge>
                       ) : (
-                        <Badge variant="outline">{record.status}</Badge>
+                        <Badge variant="outline" className="text-[10px] sm:text-xs">{record.status}</Badge>
                       )}
                     </td>
                     <td>
-                      {record.prediction ? `${((record.prediction.risk_score ?? record.prediction.fraud_probability ?? 0) * 100).toFixed(1)}%` : "--"}
+                      {record.prediction ? `${((record.prediction.risk_score ?? record.prediction.fraud_probability ?? 0) * 100).toFixed(0)}%` : "--"}
                     </td>
                   </tr>
                 ))}

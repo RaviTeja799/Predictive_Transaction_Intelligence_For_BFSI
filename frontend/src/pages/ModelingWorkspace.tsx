@@ -97,69 +97,69 @@ const ModelingWorkspace = () => {
         </Button>
       }
     >
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="training">Training Jobs</TabsTrigger>
-          <TabsTrigger value="features">Feature Importance</TabsTrigger>
-          <TabsTrigger value="explainability">Explainability</TabsTrigger>
+      <Tabs defaultValue="overview" className="space-y-3 sm:space-y-4">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm py-2">Overview</TabsTrigger>
+          <TabsTrigger value="training" className="text-xs sm:text-sm py-2">Training</TabsTrigger>
+          <TabsTrigger value="features" className="text-xs sm:text-sm py-2">Features</TabsTrigger>
+          <TabsTrigger value="explainability" className="text-xs sm:text-sm py-2">Explainability</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <TabsContent value="overview" className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
             <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Model Version</CardTitle>
+              <CardHeader className="pb-2 sm:pb-6">
+                <CardTitle className="text-sm sm:text-base">Model Version</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">v1.0.0</p>
-                <p className="text-sm text-muted-foreground">Active production model</p>
+                <p className="text-xl sm:text-2xl font-bold">v1.0.0</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Active production model</p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Accuracy</CardTitle>
+              <CardHeader className="pb-2 sm:pb-6">
+                <CardTitle className="text-sm sm:text-base">Accuracy</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">{metrics?.accuracy ? ((metrics.accuracy ?? 0) * 100).toFixed(1) : "--"}%</p>
-                <p className="text-sm text-muted-foreground">On validation set</p>
+                <p className="text-xl sm:text-2xl font-bold">{metrics?.accuracy ? ((metrics.accuracy ?? 0) * 100).toFixed(1) : "--"}%</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">On validation set</p>
               </CardContent>
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Training Jobs</CardTitle>
+              <CardHeader className="pb-2 sm:pb-6">
+                <CardTitle className="text-sm sm:text-base">Training Jobs</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold">{jobs.length}</p>
-                <p className="text-sm text-muted-foreground">Total runs</p>
+                <p className="text-xl sm:text-2xl font-bold">{jobs.length}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">Total runs</p>
               </CardContent>
             </Card>
           </div>
 
           {metrics && (
             <Card>
-              <CardHeader>
-                <CardTitle>Performance Metrics</CardTitle>
+              <CardHeader className="pb-2 sm:pb-6">
+                <CardTitle className="text-base sm:text-lg">Performance Metrics</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">Accuracy</p>
-                    <p className="text-2xl font-bold">{((metrics.accuracy ?? 0) * 100).toFixed(1)}%</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Accuracy</p>
+                    <p className="text-lg sm:text-2xl font-bold">{((metrics.accuracy ?? 0) * 100).toFixed(1)}%</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Precision</p>
-                    <p className="text-2xl font-bold">{((metrics.precision ?? 0) * 100).toFixed(1)}%</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Precision</p>
+                    <p className="text-lg sm:text-2xl font-bold">{((metrics.precision ?? 0) * 100).toFixed(1)}%</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Recall</p>
-                    <p className="text-2xl font-bold">{((metrics.recall ?? 0) * 100).toFixed(1)}%</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Recall</p>
+                    <p className="text-lg sm:text-2xl font-bold">{((metrics.recall ?? 0) * 100).toFixed(1)}%</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">F1 Score</p>
-                    <p className="text-2xl font-bold">{((metrics.f1_score ?? 0) * 100).toFixed(1)}%</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">F1 Score</p>
+                    <p className="text-lg sm:text-2xl font-bold">{((metrics.f1_score ?? 0) * 100).toFixed(1)}%</p>
                   </div>
                 </div>
               </CardContent>
@@ -167,30 +167,29 @@ const ModelingWorkspace = () => {
           )}
         </TabsContent>
 
-        <TabsContent value="training" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <TabsContent value="training" className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
             <Card className="lg:col-span-1">
-              <CardHeader>
-                <CardTitle className="text-base">Training Runs</CardTitle>
+              <CardHeader className="pb-2 sm:pb-6">
+                <CardTitle className="text-sm sm:text-base">Training Runs</CardTitle>
               </CardHeader>
               <CardContent>
-                <ScrollArea className="h-[500px] pr-4">
+                <ScrollArea className="h-[300px] sm:h-[500px] pr-2 sm:pr-4">
                   <div className="space-y-2">
                     {jobs.map((job: any) => (
                       <div
                         key={job.job_id}
                         onClick={() => setSelectedJob(job.job_id)}
-                        className={`p-3 rounded-lg border cursor-pointer ${
-                          selectedJob === job.job_id ? "border-primary bg-primary/5" : "hover:bg-muted"
-                        }`}
+                        className={`p-2 sm:p-3 rounded-lg border cursor-pointer ${selectedJob === job.job_id ? "border-primary bg-primary/5" : "hover:bg-muted"
+                          }`}
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-mono text-sm">{job.job_id}</span>
-                          <Badge variant={job.status === "completed" ? "default" : job.status === "running" ? "secondary" : "outline"}>
+                        <div className="flex items-center justify-between mb-1 sm:mb-2">
+                          <span className="font-mono text-xs sm:text-sm truncate">{job.job_id}</span>
+                          <Badge variant={job.status === "completed" ? "default" : job.status === "running" ? "secondary" : "outline"} className="text-[10px] sm:text-xs">
                             {job.status}
                           </Badge>
                         </div>
-                        <p className="text-xs text-muted-foreground capitalize">{job.model_type}</p>
+                        <p className="text-[10px] sm:text-xs text-muted-foreground capitalize">{job.model_type}</p>
                         {job.status === "running" && (
                           <Progress value={job.progress} className="mt-2" />
                         )}
@@ -296,14 +295,14 @@ const ModelingWorkspace = () => {
 
         <TabsContent value="explainability" className="space-y-4">
           {explanation ? (
-            <Card className="border-purple-200 bg-purple-50">
+            <Card className="border-purple-500/30 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-950/30">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5 text-purple-600" />
+                  <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   AI Model Explanation
                 </CardTitle>
               </CardHeader>
-              <CardContent className="whitespace-pre-wrap">
+              <CardContent className="whitespace-pre-wrap text-foreground">
                 {explanation.explanation}
               </CardContent>
             </Card>

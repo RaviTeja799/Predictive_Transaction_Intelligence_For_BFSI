@@ -103,11 +103,11 @@ const SettingsPage = () => {
         </Button>
       }
     >
-      <Tabs defaultValue="model" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="model">Model Thresholds</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="system">System Config</TabsTrigger>
+      <Tabs defaultValue="model" className="space-y-3 sm:space-y-4">
+        <TabsList className="grid w-full grid-cols-3 h-auto">
+          <TabsTrigger value="model" className="text-xs sm:text-sm px-1 sm:px-3 py-2">Thresholds</TabsTrigger>
+          <TabsTrigger value="notifications" className="text-xs sm:text-sm px-1 sm:px-3 py-2">Alerts</TabsTrigger>
+          <TabsTrigger value="system" className="text-xs sm:text-sm px-1 sm:px-3 py-2">System</TabsTrigger>
         </TabsList>
 
         <TabsContent value="model" className="space-y-4">
@@ -118,10 +118,10 @@ const SettingsPage = () => {
                 Configure fraud risk classification thresholds
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="highRisk">High Risk Threshold</Label>
+            <CardContent className="space-y-3 sm:space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="space-y-1.5 sm:space-y-2">
+                  <Label htmlFor="highRisk" className="text-sm">High Risk Threshold</Label>
                   <Input
                     id="highRisk"
                     type="number"
@@ -216,10 +216,10 @@ const SettingsPage = () => {
                 Configure alert delivery and notification preferences
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Email Notifications</Label>
+            <CardContent className="space-y-4 sm:space-y-6">
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
+                  <Label className="text-sm">Email Notifications</Label>
                   <p className="text-xs text-muted-foreground">
                     Receive alerts via email
                   </p>
@@ -232,9 +232,9 @@ const SettingsPage = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>SMS Notifications</Label>
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
+                  <Label className="text-sm">SMS Notifications</Label>
                   <p className="text-xs text-muted-foreground">
                     Receive critical alerts via SMS
                   </p>
@@ -247,11 +247,11 @@ const SettingsPage = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Immediate High Risk Alerts</Label>
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
+                  <Label className="text-sm">Immediate High Risk Alerts</Label>
                   <p className="text-xs text-muted-foreground">
-                    Send immediate alerts for high-risk transactions
+                    Send immediate alerts for high-risk
                   </p>
                 </div>
                 <Switch
@@ -262,11 +262,11 @@ const SettingsPage = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label>Batch Digest</Label>
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-0.5 flex-1">
+                  <Label className="text-sm">Batch Digest</Label>
                   <p className="text-xs text-muted-foreground">
-                    Receive periodic summary of alerts
+                    Receive periodic summary
                   </p>
                 </div>
                 <Switch

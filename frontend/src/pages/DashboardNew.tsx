@@ -22,9 +22,9 @@ import { TransactionsTable } from "@/components/dashboard/TransactionsTable";
 import { ModelPerformance } from "@/components/dashboard/ModelPerformance";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
-import { 
-  fetchTransactions, 
-  fetchFraudStatistics, 
+import {
+  fetchTransactions,
+  fetchFraudStatistics,
   fetchChannelStatistics,
   fetchModelMetrics,
   Transaction as APITransaction,
@@ -54,7 +54,7 @@ const DashboardNew = () => {
   const [channelFilter, setChannelFilter] = useState<string>("all");
   const [fraudFilter, setFraudFilter] = useState<string>("all");
   const [dateRange, setDateRange] = useState<string>("all");
-  
+
   // Data states
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,7 +84,7 @@ const DashboardNew = () => {
     const interval = setInterval(() => {
       loadDashboardData(true);
     }, 30000);
-    
+
     return () => clearInterval(interval);
   }, [channelFilter, fraudFilter]);
 
@@ -123,13 +123,13 @@ const DashboardNew = () => {
       ]);
 
       const convertedTransactions = txnData.transactions.map(convertTransaction);
-      
+
       setTransactions(convertedTransactions);
       setFraudStats(statsData);
       setChannelStats(channelData);
       setModelMetrics(metricsData);
       setLastRefresh(new Date());
-      
+
       if (!silent) {
         toast.success("Dashboard data updated successfully");
       }
@@ -155,28 +155,28 @@ const DashboardNew = () => {
   // Filter transactions based on date range (using timestamp - the actual transaction date)
   const filteredTransactionsByDate = transactions.filter(txn => {
     if (dateRange === "all") return true;
-    
+
     try {
       // Use timestamp for filtering (the business transaction date)
       const txnDate = new Date(txn.date);
       const now = new Date();
-      
+
       // Validate date
       if (isNaN(txnDate.getTime())) {
         console.warn('Invalid transaction timestamp:', txn.date);
         return false;
       }
-      
+
       // Set time to midnight for accurate day comparison
       const txnMidnight = new Date(txnDate);
       txnMidnight.setHours(0, 0, 0, 0);
-      
+
       const nowMidnight = new Date(now);
       nowMidnight.setHours(0, 0, 0, 0);
-      
+
       const daysDiff = Math.floor((nowMidnight.getTime() - txnMidnight.getTime()) / (1000 * 60 * 60 * 24));
-      
-      switch(dateRange) {
+
+      switch (dateRange) {
         case "today":
           return daysDiff === 0;
         case "7days":
@@ -196,8 +196,8 @@ const DashboardNew = () => {
 
   // Calculate filtered stats
   const filteredFraudCount = filteredTransactionsByDate.filter(t => t.isFraud).length;
-  const filteredFraudRate = filteredTransactionsByDate.length > 0 
-    ? (filteredFraudCount / filteredTransactionsByDate.length) * 100 
+  const filteredFraudRate = filteredTransactionsByDate.length > 0
+    ? (filteredFraudCount / filteredTransactionsByDate.length) * 100
     : 0;
   const totalAmount = filteredTransactionsByDate.reduce((sum, t) => sum + t.amount, 0);
   const fraudAmount = filteredTransactionsByDate.filter(t => t.isFraud).reduce((sum, t) => sum + t.amount, 0);
@@ -237,154 +237,143 @@ const DashboardNew = () => {
       subtitle="Real-time fraud detection monitoring"
       actions={
         <div className="flex items-center gap-2">
-          <div className="hidden md:flex items-center gap-2 text-sm text-muted-foreground mr-4">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span>Live</span>
-            </div>
-            <span>•</span>
-            <span>{lastRefresh.toLocaleTimeString()}</span>
-          </div>
-          <Button variant="outline" size="sm" onClick={handleExport}>
-            <Download className="h-4 w-4 mr-2" />
+          <Button variant="outline" size="sm" onClick={handleExport} className="h-8 text-xs sm:text-sm">
+            <Download className="h-4 w-4 mr-1.5" />
             Export
           </Button>
-          <Button size="sm" onClick={handleRefresh}>
-            <RefreshCw className="h-4 w-4 mr-2" />
+          <Button size="sm" onClick={handleRefresh} className="h-8 text-xs sm:text-sm">
+            <RefreshCw className="h-4 w-4 mr-1.5" />
             Refresh
           </Button>
         </div>
       }
     >
       {/* Filter Bar */}
-      <Card>
-          <CardContent className="pt-6">
-            <div className="flex flex-wrap gap-4 items-center">
-              <div className="flex items-center gap-2">
-                <Filter className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm font-medium">Filters:</span>
+      <Card className="border-l-4 border-l-primary/50">
+        <CardContent className="py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            {/* Filter Label */}
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="p-1.5 rounded-md bg-primary/10">
+                <Filter className="h-3.5 w-3.5 text-primary" />
               </div>
-              
-              <div className="flex flex-wrap gap-3 flex-1">
-                <div className="space-y-1">
-                  <label className="text-xs text-muted-foreground">Channel</label>
-                  <Select value={channelFilter} onValueChange={setChannelFilter}>
-                    <SelectTrigger className="w-[140px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Channels</SelectItem>
-                      <SelectItem value="Mobile">Mobile</SelectItem>
-                      <SelectItem value="Web">Web</SelectItem>
-                      <SelectItem value="ATM">ATM</SelectItem>
-                      <SelectItem value="POS">POS</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-1">
-                  <label className="text-xs text-muted-foreground">Status</label>
-                  <Select value={fraudFilter} onValueChange={setFraudFilter}>
-                    <SelectTrigger className="w-[140px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Transactions</SelectItem>
-                      <SelectItem value="fraud">Fraud Only</SelectItem>
-                      <SelectItem value="legitimate">Legitimate Only</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="space-y-1">
-                  <label className="text-xs text-muted-foreground">Date Range</label>
-                  <Select value={dateRange} onValueChange={setDateRange}>
-                    <SelectTrigger className="w-[140px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="today">Today</SelectItem>
-                      <SelectItem value="7days">Last 7 Days</SelectItem>
-                      <SelectItem value="30days">Last 30 Days</SelectItem>
-                      <SelectItem value="90days">Last 90 Days</SelectItem>
-                      <SelectItem value="all">All Time</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              
-              {(channelFilter !== "all" || fraudFilter !== "all" || dateRange !== "all") && (
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => {
-                    setChannelFilter("all");
-                    setFraudFilter("all");
-                    setDateRange("all");
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              )}
+              <span className="text-xs sm:text-sm font-medium">Filters</span>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <MetricCard
-            title="Total Transactions"
-            value={filteredTransactionsByDate.length.toLocaleString()}
-            icon={Users}
-            trend="up"
-            trendValue="+12.5%"
-            subtitle={`₹${(totalAmount / 1000000).toFixed(2)}M total volume`}
-          />
-          <MetricCard
-            title="Fraud Detected"
-            value={filteredFraudCount.toLocaleString()}
-            icon={AlertTriangle}
-            trend="down"
-            trendValue="+8.3%"
-            subtitle={`₹${(fraudAmount / 1000000).toFixed(2)}M prevented`}
-            variant="danger"
-          />
-          <MetricCard
-            title="Fraud Rate"
-            value={`${filteredFraudRate.toFixed(2)}%`}
-            icon={TrendingUp}
-            trend="down"
-            trendValue="-2.1%"
-            subtitle="Below industry average"
-          />
-          <MetricCard
-            title="Model Accuracy"
-            value={`${((modelMetrics?.accuracy || 0) * 100).toFixed(1)}%`}
-            icon={Shield}
-            subtitle={`Precision: ${((modelMetrics?.precision || 0) * 100).toFixed(1)}%`}
-            variant="success"
-          />
-        </div>
+            {/* Filter Controls */}
+            <div className="grid grid-cols-3 gap-2 sm:flex sm:gap-3 flex-1">
+              <Select value={channelFilter} onValueChange={setChannelFilter}>
+                <SelectTrigger className="h-8 sm:h-9 text-xs sm:text-sm sm:w-[130px]">
+                  <SelectValue placeholder="Channel" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Channels</SelectItem>
+                  <SelectItem value="Mobile">Mobile</SelectItem>
+                  <SelectItem value="Web">Web</SelectItem>
+                  <SelectItem value="ATM">ATM</SelectItem>
+                  <SelectItem value="POS">POS</SelectItem>
+                </SelectContent>
+              </Select>
 
-        {/* Model Performance */}
-        <ModelPerformance
-          accuracy={modelMetrics?.accuracy || 0.9133}
-          precision={modelMetrics?.precision || 0.50}
-          recall={modelMetrics?.recall || 0.1077}
-          f1Score={modelMetrics?.f1_score || 0.1772}
+              <Select value={fraudFilter} onValueChange={setFraudFilter}>
+                <SelectTrigger className="h-8 sm:h-9 text-xs sm:text-sm sm:w-[140px]">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="fraud">Fraud</SelectItem>
+                  <SelectItem value="legitimate">Legitimate</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={dateRange} onValueChange={setDateRange}>
+                <SelectTrigger className="h-8 sm:h-9 text-xs sm:text-sm sm:w-[120px]">
+                  <SelectValue placeholder="Date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="7days">7 Days</SelectItem>
+                  <SelectItem value="30days">30 Days</SelectItem>
+                  <SelectItem value="90days">90 Days</SelectItem>
+                  <SelectItem value="all">All Time</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Clear Filters */}
+            {(channelFilter !== "all" || fraudFilter !== "all" || dateRange !== "all") && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 text-xs sm:text-sm shrink-0"
+                onClick={() => {
+                  setChannelFilter("all");
+                  setFraudFilter("all");
+                  setDateRange("all");
+                }}
+              >
+                Clear
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Key Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <MetricCard
+          title="Total Transactions"
+          value={filteredTransactionsByDate.length.toLocaleString()}
+          icon={Users}
+          trend="up"
+          trendValue="+12.5%"
+          subtitle={`₹${(totalAmount / 1000000).toFixed(2)}M total volume`}
         />
+        <MetricCard
+          title="Fraud Detected"
+          value={filteredFraudCount.toLocaleString()}
+          icon={AlertTriangle}
+          trend="down"
+          trendValue="+8.3%"
+          subtitle={`₹${(fraudAmount / 1000000).toFixed(2)}M prevented`}
+          variant="danger"
+        />
+        <MetricCard
+          title="Fraud Rate"
+          value={`${filteredFraudRate.toFixed(2)}%`}
+          icon={TrendingUp}
+          trend="down"
+          trendValue="-2.1%"
+          subtitle="Below industry average"
+        />
+        <MetricCard
+          title="Model Accuracy"
+          value={`${((modelMetrics?.accuracy || 0) * 100).toFixed(1)}%`}
+          icon={Shield}
+          subtitle={`Precision: ${((modelMetrics?.precision || 0) * 100).toFixed(1)}%`}
+          variant="success"
+        />
+      </div>
 
-        {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <FraudByTypeChart channelStats={channelStats} />
-          <FraudByHourChart transactions={filteredTransactionsByDate} />
-        </div>
+      {/* Model Performance */}
+      <ModelPerformance
+        accuracy={modelMetrics?.accuracy || 0.9133}
+        precision={modelMetrics?.precision || 0.50}
+        recall={modelMetrics?.recall || 0.1077}
+        f1Score={modelMetrics?.f1_score || 0.1772}
+      />
 
-        <FraudTrendChart transactions={filteredTransactionsByDate} />
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <FraudByTypeChart channelStats={channelStats} />
+        <FraudByHourChart transactions={filteredTransactionsByDate} />
+      </div>
 
-        {/* Transactions Tables */}
-        <TransactionsTable transactions={filteredTransactionsByDate} showFraudOnly />
-        <TransactionsTable transactions={filteredTransactionsByDate} />
+      <FraudTrendChart transactions={filteredTransactionsByDate} />
+
+      {/* Transactions Tables */}
+      <TransactionsTable transactions={filteredTransactionsByDate} showFraudOnly />
+      <TransactionsTable transactions={filteredTransactionsByDate} />
     </AppShell>
   );
 };

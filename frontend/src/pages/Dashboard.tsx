@@ -244,38 +244,39 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card shadow-sm">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-primary flex items-center gap-2">
-                <Shield className="h-8 w-8" />
-                Predictive Transaction Intelligence
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary flex items-center gap-2">
+                <Shield className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8" />
+                <span className="hidden sm:inline">Predictive Transaction Intelligence</span>
+                <span className="sm:hidden">PTI Dashboard</span>
               </h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1 hidden sm:block">
                 BFSI Fraud Detection Dashboard — Real-time Analytics & Insights
               </p>
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm" asChild>
+            <div className="flex gap-2 w-full sm:w-auto">
+              <Button variant="outline" size="sm" asChild className="flex-1 sm:flex-none">
                 <Link to="/">
-                  <Home className="h-4 w-4 mr-2" />
-                  Home
+                  <Home className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Home</span>
                 </Link>
               </Button>
-              <Button variant="outline" size="sm" onClick={handleRefresh}>
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Refresh
+              <Button variant="outline" size="sm" onClick={handleRefresh} className="flex-1 sm:flex-none">
+                <RefreshCw className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Refresh</span>
               </Button>
-              <Button size="sm" onClick={handleDownloadReport}>
-                <Download className="h-4 w-4 mr-2" />
-                Download Report
+              <Button size="sm" onClick={handleDownloadReport} className="flex-1 sm:flex-none">
+                <Download className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Download Report</span>
               </Button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-6">
         <FilterBar
           timeRange={timeRange}
           transactionType={transactionType}
@@ -285,7 +286,7 @@ const Dashboard = () => {
        
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
           <MetricCard
             title="Total Transactions"
             value={stats.total.toLocaleString()}
@@ -316,7 +317,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
           <MetricCard
             title="Average Transaction"
             value={`₹${Math.round(stats.avgAmount).toLocaleString()}`}
@@ -337,7 +338,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <FraudDistributionChart
             fraudCount={stats.fraudCount}
             legitimateCount={stats.legitimateCount}
@@ -348,20 +349,12 @@ const Dashboard = () => {
             recall={modelMetrics?.recall || 0.14}
             f1Score={modelMetrics?.f1_score || 0.20}
             rocAuc={modelMetrics?.roc_auc || 0.7334}
-            riskDistribution={modelMetrics?.probability_distribution 
-              ? {
-                  low: modelMetrics.probability_distribution.low_pct,
-                  medium: modelMetrics.probability_distribution.medium_pct,
-                  high: modelMetrics.probability_distribution.high_pct
-                }
-              : { low: 89, medium: 9.4, high: 1.6 }
-            }
           />
         </div>
 
         <FraudTrendChart transactions={filteredTransactions} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <FraudByTypeChart channelStats={channelStats} />
           <FraudByHourChart transactions={filteredTransactions} />
         </div>
@@ -371,9 +364,9 @@ const Dashboard = () => {
         <TransactionsTable transactions={filteredTransactions} />
       </main>
 
-      <footer className="border-t bg-card mt-12">
-        <div className="container mx-auto px-4 py-6">
-          <div className="text-center text-sm text-muted-foreground">
+      <footer className="border-t bg-card mt-8 sm:mt-12">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
+          <div className="text-center text-xs sm:text-sm text-muted-foreground">
             <p className="font-medium">Developed by Team Predictive Intelligence</p>
             <p className="mt-1">BFSI Fraud Detection System</p>
           </div>

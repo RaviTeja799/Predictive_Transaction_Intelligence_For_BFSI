@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AppShell from "@/components/layout/AppShell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -55,19 +54,19 @@ let targetFraudRate = 0.09 + Math.random() * 0.06; // 9-15% fraud rate
 
 const buildRandomTransaction = (index: number, batchSize: number, runTimestamp: number): PredictionRequest => {
   totalCount++;
-  
+
   // Calculate target fraud count (9-15% of batch size)
   const targetFraudCount = Math.floor(batchSize * targetFraudRate);
   const remainingTxns = batchSize - totalCount + 1;
   const remainingFraudsNeeded = targetFraudCount - fraudCount;
-  
+
   // Ensure we hit target by making remaining transactions fraud if needed
   const mustBeFraud = remainingFraudsNeeded >= remainingTxns;
   const shouldBeFraud = mustBeFraud || (fraudCount < targetFraudCount && Math.random() < (remainingFraudsNeeded / remainingTxns) * 1.5);
-  
+
   // Unique transaction ID with timestamp to avoid duplicates
   const uniqueId = `SIM${runTimestamp}_${String(index + 1).padStart(4, "0")}`;
-  
+
   // Use current date and random hour for realistic timestamps
   const now = new Date();
   const randomHour = Math.floor(Math.random() * 24);
@@ -108,9 +107,9 @@ const buildRandomTransaction = (index: number, batchSize: number, runTimestamp: 
         hour: [1, 2, 3, 4][Math.floor(Math.random() * 4)],
       }
     ];
-    
+
     const pattern = fraudPatterns[Math.floor(Math.random() * fraudPatterns.length)];
-    
+
     return {
       customer_id: uniqueId,
       account_age_days: pattern.account_age_days,
@@ -121,7 +120,7 @@ const buildRandomTransaction = (index: number, batchSize: number, runTimestamp: 
       timestamp: deviceTimestamp,
     };
   }
-  
+
   // Normal legitimate transaction pattern
   return {
     customer_id: uniqueId,
@@ -135,7 +134,6 @@ const buildRandomTransaction = (index: number, batchSize: number, runTimestamp: 
 };
 
 const SimulationLab = () => {
-  const navigate = useNavigate();
   const { addPendingTransactionsBatch, getPendingCount } = useTransactionStore();
   const [batchSize, setBatchSize] = useState(100);
   const [concurrency, setConcurrency] = useState(5);
@@ -175,7 +173,7 @@ const SimulationLab = () => {
     setRunning(true);
     setRecords([]);
     setProgress(0);
-    
+
     // Reset fraud counter for new simulation
     fraudCount = 0;
     totalCount = 0;
@@ -207,7 +205,7 @@ const SimulationLab = () => {
           }
         })
       );
-      
+
       // Batch update state once per chunk
       setRecords((prev) => {
         const copy = [...prev];
@@ -222,13 +220,13 @@ const SimulationLab = () => {
         });
         return copy;
       });
-      
+
       completed += chunk.length;
       setProgress(Math.round((completed / payloads.length) * 100));
     }
 
     setRunning(false);
-    
+
     // Auto-send to Case Management - use setRecords callback to get latest state
     setRecords((currentRecords) => {
       const pendingTransactions: PendingTransaction[] = currentRecords
@@ -240,15 +238,14 @@ const SimulationLab = () => {
           prediction: record.prediction!,
           createdAt: record.startedAt,
         }));
-      
+
       if (pendingTransactions.length > 0) {
         addPendingTransactionsBatch(pendingTransactions);
-        toast.success(`Simulation complete - ${pendingTransactions.length} transactions sent to Case Management`);
-        setTimeout(() => navigate('/cases'), 500);
+        toast.success(`Simulation complete! ${pendingTransactions.length} transactions sent to Case Management for verification.`);
       } else {
         toast.error("No successful predictions to send");
       }
-      
+
       return currentRecords;
     });
   };
@@ -388,42 +385,42 @@ const SimulationLab = () => {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Simulation Results</CardTitle>
+        <CardHeader className="pb-2 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg">Simulation Results</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+        <CardContent className="p-2 sm:p-6">
+          <div className="overflow-x-auto -mx-2 sm:mx-0">
+            <table className="w-full text-xs sm:text-sm min-w-[600px]">
               <thead>
                 <tr className="text-left text-muted-foreground">
-                  <th className="pb-2">#</th>
-                  <th>Transaction ID</th>
-                  <th>Amount</th>
-                  <th>Channel</th>
-                  <th>Timestamp</th>
-                  <th>Prediction</th>
-                  <th>Probability</th>
+                  <th className="pb-2 px-2 sm:px-3">#</th>
+                  <th className="pb-2 px-2 sm:px-3">Transaction ID</th>
+                  <th className="pb-2 px-2 sm:px-3">Amount</th>
+                  <th className="pb-2 px-2 sm:px-3">Channel</th>
+                  <th className="pb-2 px-2 sm:px-3 hidden sm:table-cell">Timestamp</th>
+                  <th className="pb-2 px-2 sm:px-3">Prediction</th>
+                  <th className="pb-2 px-2 sm:px-3">Prob</th>
                 </tr>
               </thead>
               <tbody>
                 {completedRecords.map((record, idx) => (
                   <tr key={record.id} className="border-t">
-                    <td className="py-2">{idx + 1}</td>
-                    <td className="font-mono">{record.payload.customer_id}</td>
-                    <td>₹{record.payload.amount.toLocaleString()}</td>
-                    <td>{record.payload.channel}</td>
-                    <td>{formatTimestamp(record.prediction?.timestamp || record.payload.timestamp)}</td>
-                    <td>
+                    <td className="py-2 px-2 sm:px-3">{idx + 1}</td>
+                    <td className="py-2 px-2 sm:px-3 font-mono text-[10px] sm:text-sm truncate max-w-[80px] sm:max-w-none">{record.payload.customer_id}</td>
+                    <td className="py-2 px-2 sm:px-3 whitespace-nowrap">₹{record.payload.amount.toLocaleString()}</td>
+                    <td className="py-2 px-2 sm:px-3">{record.payload.channel}</td>
+                    <td className="py-2 px-2 sm:px-3 hidden sm:table-cell">{formatTimestamp(record.prediction?.timestamp || record.payload.timestamp)}</td>
+                    <td className="py-2 px-2 sm:px-3">
                       {record.prediction ? (
-                        <Badge variant={record.prediction.prediction === "Fraud" ? "destructive" : "default"}>
+                        <Badge variant={record.prediction.prediction === "Fraud" ? "destructive" : "default"} className="text-[10px] sm:text-xs">
                           {record.prediction.prediction}
                         </Badge>
                       ) : (
-                        <Badge variant="outline">{record.status}</Badge>
+                        <Badge variant="outline" className="text-[10px] sm:text-xs">{record.status}</Badge>
                       )}
                     </td>
-                    <td>
-                      {record.prediction ? `${((record.prediction.risk_score ?? record.prediction.fraud_probability ?? 0) * 100).toFixed(1)}%` : "--"}
+                    <td className="py-2 px-2 sm:px-3 text-[10px] sm:text-sm">
+                      {record.prediction ? `${((record.prediction.risk_score ?? record.prediction.fraud_probability ?? 0) * 100).toFixed(0)}%` : "--"}
                     </td>
                   </tr>
                 ))}

@@ -179,70 +179,70 @@ const AlertsPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" asChild>
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+              <Button variant="ghost" size="sm" asChild className="shrink-0 px-2 sm:px-3">
                 <Link to="/dashboard">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
+                  <ArrowLeft className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Back</span>
                 </Link>
               </Button>
-              <div>
-                <h1 className="text-2xl font-bold flex items-center gap-2">
-                  <Bell className="h-6 w-6 text-primary" />
-                  Alerts & Notifications
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-2xl font-bold flex items-center gap-2">
+                  <Bell className="h-5 w-5 sm:h-6 sm:w-6 text-primary shrink-0" />
+                  <span className="truncate">Alerts</span>
                 </h1>
-                <p className="text-sm text-muted-foreground">Real-time fraud alert management</p>
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">Real-time fraud alert management</p>
               </div>
             </div>
             
             <Button size="sm" onClick={() => {
               alertsQuery.refetch();
               statsQuery.refetch();
-            }}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Refresh
+            }} className="shrink-0 px-2 sm:px-3">
+              <RefreshCw className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">Refresh</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
           <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
+            <CardContent className="pt-3 sm:pt-6 p-2 sm:p-6">
+              <div className="flex items-center justify-between gap-1">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Pending Alerts</p>
-                  <p className="text-3xl font-bold">{pendingCount}</p>
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Pending</p>
+                  <p className="text-xl sm:text-3xl font-bold">{pendingCount}</p>
                 </div>
-                <AlertTriangle className="h-8 w-8 text-orange-500" />
+                <AlertTriangle className="h-5 w-5 sm:h-8 sm:w-8 text-orange-500 shrink-0" />
               </div>
             </CardContent>
           </Card>
           
           <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
+            <CardContent className="pt-3 sm:pt-6 p-2 sm:p-6">
+              <div className="flex items-center justify-between gap-1">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">High Risk</p>
-                  <p className="text-3xl font-bold">{highRiskCount}</p>
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">High Risk</p>
+                  <p className="text-xl sm:text-3xl font-bold">{highRiskCount}</p>
                 </div>
-                <Shield className="h-8 w-8 text-red-500" />
+                <Shield className="h-5 w-5 sm:h-8 sm:w-8 text-red-500 shrink-0" />
               </div>
             </CardContent>
           </Card>
           
           <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
+            <CardContent className="pt-3 sm:pt-6 p-2 sm:p-6">
+              <div className="flex items-center justify-between gap-1">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Total Alerts</p>
-                  <p className="text-3xl font-bold">{alerts.length}</p>
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground">Total</p>
+                  <p className="text-xl sm:text-3xl font-bold">{alerts.length}</p>
                 </div>
-                <Bell className="h-8 w-8 text-blue-500" />
+                <Bell className="h-5 w-5 sm:h-8 sm:w-8 text-blue-500 shrink-0" />
               </div>
             </CardContent>
           </Card>
@@ -250,45 +250,47 @@ const AlertsPage = () => {
 
         {/* Filters */}
         <Card>
-          <CardContent className="pt-6">
-            <div className="flex flex-wrap gap-4">
-              <div className="flex-1 min-w-[200px]">
+          <CardContent className="pt-4 sm:pt-6 p-3 sm:p-6">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+              <div className="flex-1 min-w-0">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="Search by transaction ID or customer ID..."
+                    placeholder="Search..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 text-sm"
                   />
                 </div>
               </div>
               
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="acknowledged">Acknowledged</SelectItem>
-                  <SelectItem value="resolved">Resolved</SelectItem>
-                  <SelectItem value="false_positive">False Positive</SelectItem>
-                </SelectContent>
-              </Select>
-              
-              <Select value={severityFilter} onValueChange={setSeverityFilter}>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Severity</SelectItem>
-                  <SelectItem value="critical">Critical</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="low">Low</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex gap-2">
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-full sm:w-[140px] h-9 text-xs sm:text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="acknowledged">Acknowledged</SelectItem>
+                    <SelectItem value="resolved">Resolved</SelectItem>
+                    <SelectItem value="false_positive">False Positive</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                <Select value={severityFilter} onValueChange={setSeverityFilter}>
+                  <SelectTrigger className="w-full sm:w-[140px] h-9 text-xs sm:text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Severity</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -312,34 +314,34 @@ const AlertsPage = () => {
           ) : (
             filteredAlerts.map((alert: Alert) => (
               <Card key={alert.alert_id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <CardTitle className="text-lg">{alert.transaction_id}</CardTitle>
+                <CardHeader className="p-3 sm:p-6 pb-2 sm:pb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
+                    <div className="space-y-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <CardTitle className="text-sm sm:text-lg truncate">{alert.transaction_id}</CardTitle>
                         <Badge variant={getStatusColor(alert)} className="text-xs">
                           {getStatusLabel(alert).toUpperCase()}
                         </Badge>
                       </div>
-                      <CardDescription>
-                        Customer: {alert.customer_id} • {new Date(alert.timestamp).toLocaleString()}
+                      <CardDescription className="text-xs">
+                        {alert.customer_id} • {new Date(alert.timestamp).toLocaleDateString()}
                       </CardDescription>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <Badge className={getRiskColor(alert.severity)}>
-                        {alert.severity} Severity
+                    <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                      <Badge className={`${getRiskColor(alert.severity)} text-xs`}>
+                        {alert.severity}
                       </Badge>
-                      <Badge variant="outline">{alert.alert_type}</Badge>
+                      <Badge variant="outline" className="text-xs hidden sm:inline-flex">{alert.alert_type}</Badge>
                     </div>
                   </div>
                 </CardHeader>
                 
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 text-sm">
+                <CardContent className="p-3 sm:p-6 pt-0">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm flex-wrap">
                       <span className="font-semibold">Amount:</span>
-                      <span className="text-lg">₹{(alert.details?.amount || 0).toLocaleString()}</span>
+                      <span className="text-base sm:text-lg">₹{(alert.details?.amount || 0).toLocaleString()}</span>
                       <span className="text-muted-foreground">•</span>
                       <span>Flags: {alert.details?.flag_count || 0}</span>
                     </div>
@@ -365,16 +367,17 @@ const AlertsPage = () => {
                     </div>
                     
                     {!alert.resolved && (
-                      <div className="flex gap-2 pt-2">
+                      <div className="flex flex-wrap gap-2 pt-2">
                         {!alert.acknowledged && (
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => acknowledgeMutation.mutate(alert.alert_id)}
                             disabled={acknowledgeMutation.isPending}
+                            className="text-xs h-8"
                           >
-                            <Eye className="h-4 w-4 mr-2" />
-                            Acknowledge
+                            <Eye className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                            <span className="hidden sm:inline">Acknowledge</span>
                           </Button>
                         )}
                         <Button
@@ -384,9 +387,10 @@ const AlertsPage = () => {
                             setSelectedAlert(alert);
                             setShowResolveDialog(true);
                           }}
+                          className="text-xs h-8"
                         >
-                          <Check className="h-4 w-4 mr-2" />
-                          Resolve
+                          <Check className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                          <span className="hidden sm:inline">Resolve</span>
                         </Button>
                         <Button
                           size="sm"
@@ -395,9 +399,10 @@ const AlertsPage = () => {
                             setSelectedAlert(alert);
                             setShowFalsePositiveDialog(true);
                           }}
+                          className="text-xs h-8"
                         >
-                          <X className="h-4 w-4 mr-2" />
-                          False Positive
+                          <X className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
+                          <span className="hidden sm:inline">False Positive</span>
                         </Button>
                       </div>
                     )}

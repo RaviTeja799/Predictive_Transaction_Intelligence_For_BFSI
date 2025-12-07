@@ -73,22 +73,22 @@ export const FraudHeatmap = ({ transactions, channelStats }: FraudHeatmapProps) 
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Fraud Rate by Location</CardTitle>
+      <CardHeader className="pb-2 sm:pb-6">
+        <CardTitle className="text-base sm:text-lg">Fraud Rate by Location</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
           {sortedData.map((item) => (
             <div
               key={item.location}
-              className={`${getColor(item.fraudRate)} text-white p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer`}
+              className={`${getColor(item.fraudRate)} text-white p-2 sm:p-4 rounded-lg transition-transform hover:scale-105 cursor-pointer`}
             >
-              <div className="font-semibold text-sm mb-1">{item.location}</div>
-              <div className="text-2xl font-bold">{item.fraudRate.toFixed(1)}%</div>
-              <div className="text-xs opacity-90">{item.count} transactions</div>
+              <div className="font-semibold text-[10px] sm:text-sm mb-0.5 sm:mb-1 truncate">{item.location}</div>
+              <div className="text-lg sm:text-2xl font-bold">{item.fraudRate.toFixed(1)}%</div>
+              <div className="text-[10px] sm:text-xs opacity-90">{item.count} txns</div>
               {('avgAmount' in item) && (
-                <div className="text-xs opacity-75 mt-1">
-                  ₹{Math.round(item.avgAmount).toLocaleString()} avg
+                <div className="text-[10px] sm:text-xs opacity-75 mt-0.5 sm:mt-1">
+                  ₹{Math.round(item.avgAmount).toLocaleString()}
                 </div>
               )}
             </div>

@@ -205,73 +205,73 @@ const Alerts = () => {
       }
     >
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Total Alerts</CardTitle>
+          <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Alerts</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold">{stats.total_alerts || 0}</div>
-            <p className="text-xs text-muted-foreground mt-1">
+          <CardContent className="pt-0 p-3 sm:p-6">
+            <div className="text-xl sm:text-3xl font-bold">{stats.total_alerts || 0}</div>
+            <p className="text-xs text-muted-foreground mt-1 hidden sm:block">
               Resolution rate: {stats.resolution_rate || 0}%
             </p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <AlertOctagon className="h-4 w-4 text-red-600" />
+          <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
+            <CardTitle className="text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2">
+              <AlertOctagon className="h-3 w-3 sm:h-4 sm:w-4 text-red-600" />
               Pending
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-red-600">{stats.pending || 0}</div>
-            <p className="text-xs text-muted-foreground mt-1">Require attention</p>
+          <CardContent className="pt-0 p-3 sm:p-6">
+            <div className="text-xl sm:text-3xl font-bold text-red-600">{stats.pending || 0}</div>
+            <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Require attention</p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-blue-600" />
+          <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
+            <CardTitle className="text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2">
+              <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
               Acknowledged
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-blue-600">{stats.acknowledged || 0}</div>
-            <p className="text-xs text-muted-foreground mt-1">Under investigation</p>
+          <CardContent className="pt-0 p-3 sm:p-6">
+            <div className="text-xl sm:text-3xl font-bold text-blue-600">{stats.acknowledged || 0}</div>
+            <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Under investigation</p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <XCircle className="h-4 w-4 text-green-600" />
+          <CardHeader className="pb-2 sm:pb-3 p-3 sm:p-6">
+            <CardTitle className="text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2">
+              <XCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
               Resolved
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-green-600">{stats.resolved || 0}</div>
-            <p className="text-xs text-muted-foreground mt-1">Closed cases</p>
+          <CardContent className="pt-0 p-3 sm:p-6">
+            <div className="text-xl sm:text-3xl font-bold text-green-600">{stats.resolved || 0}</div>
+            <p className="text-xs text-muted-foreground mt-1 hidden sm:block">Closed cases</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Filters */}
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
+      <Card className="mb-4 sm:mb-6">
+        <CardHeader className="pb-2 sm:pb-4 p-3 sm:p-6">
+          <CardTitle className="text-sm sm:text-base flex items-center gap-2">
             <Filter className="h-4 w-4" />
             Filters
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <CardContent className="p-3 sm:p-6 pt-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
             <div>
-              <Label>Status</Label>
+              <Label className="text-xs sm:text-sm">Status</Label>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="h-8 sm:h-10 text-xs sm:text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -284,9 +284,9 @@ const Alerts = () => {
             </div>
 
             <div>
-              <Label>Severity</Label>
+              <Label className="text-xs sm:text-sm">Severity</Label>
               <Select value={severityFilter} onValueChange={setSeverityFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="h-8 sm:h-10 text-xs sm:text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -299,10 +299,10 @@ const Alerts = () => {
               </Select>
             </div>
 
-            <div className="flex items-end">
+            <div className="flex items-end col-span-2 sm:col-span-1">
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full h-8 sm:h-10 text-xs sm:text-sm"
                 onClick={() => {
                   setStatusFilter("all");
                   setSeverityFilter("all");
@@ -317,15 +317,15 @@ const Alerts = () => {
 
       {/* Alerts List */}
       <Card>
-        <CardHeader>
-          <CardTitle>Alerts ({filteredAlerts.length})</CardTitle>
-          <CardDescription>
+        <CardHeader className="pb-2 sm:pb-4 p-3 sm:p-6">
+          <CardTitle className="text-base sm:text-lg">Alerts ({filteredAlerts.length})</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
             Click on an alert to view details and take actions
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[600px] pr-4">
-            <div className="space-y-4">
+        <CardContent className="p-3 sm:p-6 pt-0">
+          <ScrollArea className="h-[400px] sm:h-[600px] pr-2 sm:pr-4">
+            <div className="space-y-3 sm:space-y-4">
               {filteredAlerts.length === 0 ? (
                 <div className="text-center py-12">
                   <Bell className="h-12 w-12 mx-auto text-muted-foreground opacity-50" />

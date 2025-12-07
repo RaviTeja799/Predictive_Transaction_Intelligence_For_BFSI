@@ -88,18 +88,18 @@ const AnalyticsReports = () => {
       subtitle="Operational telemetry, fraud trends, and model health"
       actions={
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={handleExportReport}>
-            <DownloadCloud className="mr-2 h-4 w-4" />
+          <Button variant="outline" size="sm" onClick={handleExportReport} className="h-8 text-xs sm:text-sm">
+            <DownloadCloud className="h-4 w-4 mr-1.5" />
             Export
           </Button>
-          <Button size="sm" onClick={handleRefresh}>
-            <RefreshCw className="mr-2 h-4 w-4" />
+          <Button size="sm" onClick={handleRefresh} className="h-8 text-xs sm:text-sm">
+            <RefreshCw className="h-4 w-4 mr-1.5" />
             Refresh
           </Button>
         </div>
       }
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
         <MetricCard
           title="Total Transactions"
           value={fraudStats ? fraudStats.total.toLocaleString() : "-"}
@@ -137,7 +137,7 @@ const AnalyticsReports = () => {
       {/* Feature Importance Section */}
       <FeatureImportance />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         <FraudDistributionChart
           fraudCount={fraudStats?.fraud_count || 0}
           legitimateCount={fraudStats?.legitimate_count || 0}
@@ -145,7 +145,7 @@ const AnalyticsReports = () => {
         <FraudByTypeChart channelStats={channelStats} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         <FraudByHourChart transactions={transactions} />
         <FraudTrendChart transactions={transactions} />
       </div>

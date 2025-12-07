@@ -65,26 +65,26 @@ const Landing = () => {
     <div className="min-h-screen bg-background">
       {/* Fixed Header with Theme Toggle */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-primary" />
-            <span className="font-bold text-lg">TransIntelliFlow</span>
+            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+            <span className="font-bold text-sm sm:text-lg">TransIntelliFlow</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
             <SignedOut>
               <Link to="/sign-in">
-                <Button variant="outline" size="sm">Login</Button>
+                <Button variant="outline" size="sm" className="text-xs sm:text-sm h-8 sm:h-9 px-2 sm:px-3">Login</Button>
               </Link>
-              <Link to="/sign-up">
-                <Button size="sm">Get Started</Button>
+              <Link to="/sign-up" className="hidden sm:inline-block">
+                <Button size="sm" className="text-xs sm:text-sm h-8 sm:h-9">Get Started</Button>
               </Link>
             </SignedOut>
             <SignedIn>
               <Link to="/dashboard">
                 <Button variant="outline" size="sm">Dashboard</Button>
               </Link>
-              <UserButton 
+              <UserButton
                 afterSignOutUrl="/"
                 appearance={{
                   elements: {
@@ -120,42 +120,42 @@ const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 pt-24">
-        <div className="container mx-auto px-4 py-20 lg:py-32">
-          <div className="flex flex-col items-center text-center space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-              <Shield className="h-4 w-4" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 pt-20 sm:pt-24">
+        <div className="container mx-auto px-4 py-12 sm:py-20 lg:py-32">
+          <div className="flex flex-col items-center text-center space-y-6 sm:space-y-8">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-medium">
+              <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
               Advanced BFSI Fraud Detection
             </div>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl">
+
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl px-2">
               Predictive Transaction
-              <span className="block text-primary mt-2">Intelligence Platform</span>
+              <span className="block text-primary mt-1 sm:mt-2">Intelligence Platform</span>
             </h1>
-            
-            <p className="text-xl text-muted-foreground max-w-2xl">
+
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl px-4">
               Protect your financial institution with AI-powered fraud detection.
               Real-time monitoring, predictive analytics, and comprehensive insights.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4 w-full sm:w-auto px-4 sm:px-0">
               <SignedOut>
-                <Button size="lg" asChild className="text-lg h-12 px-8">
+                <Button size="lg" asChild className="text-base sm:text-lg h-11 sm:h-12 px-6 sm:px-8 w-full sm:w-auto">
                   <Link to="/sign-in">
                     Access Console
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 </Button>
               </SignedOut>
               <SignedIn>
-                <Button size="lg" asChild className="text-lg h-12 px-8">
+                <Button size="lg" asChild className="text-base sm:text-lg h-11 sm:h-12 px-6 sm:px-8 w-full sm:w-auto">
                   <Link to="/dashboard">
                     Go to Dashboard
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 </Button>
               </SignedIn>
-              <Button size="lg" variant="outline" asChild className="text-lg h-12 px-8">
+              <Button size="lg" variant="outline" asChild className="text-base sm:text-lg h-11 sm:h-12 px-6 sm:px-8 w-full sm:w-auto">
                 <Link to="/predict">
                   Test Fraud Detection
                 </Link>
@@ -164,21 +164,21 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        {/* Decorative elements - hidden on mobile */}
+        <div className="hidden sm:block absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary/10 rounded-full blur-3xl" />
+        <div className="hidden sm:block absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-accent/10 rounded-full blur-3xl" />
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 border-y bg-card/50">
+      <section className="py-8 sm:py-12 border-y bg-card/50">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1 sm:mb-2">
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -186,27 +186,27 @@ const Landing = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 lg:py-32">
+      <section className="py-12 sm:py-20 lg:py-32">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          <div className="text-center mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
               Comprehensive Fraud Protection
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2">
               Everything you need to detect, prevent, and analyze fraudulent transactions
               in your banking ecosystem.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {features.map((feature, index) => (
               <Card key={index} className="transition-all hover:shadow-lg">
-                <CardContent className="p-6 space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                    <feature.icon className="h-6 w-6" />
+                <CardContent className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                    <feature.icon className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
-                  <h3 className="text-xl font-semibold">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-lg sm:text-xl font-semibold">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-muted-foreground">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -215,17 +215,17 @@ const Landing = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 lg:py-32 bg-muted/30">
+      <section className="py-12 sm:py-20 lg:py-32 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">How It Works</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">How It Works</h2>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-2">
               Our intelligent system analyzes transactions in real-time using advanced
               machine learning algorithms.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 step: "01",
@@ -247,12 +247,12 @@ const Landing = () => {
               },
             ].map((item, index) => (
               <div key={index} className="relative">
-                <div className="text-6xl font-bold text-primary/10 mb-4">{item.step}</div>
-                <h3 className="text-2xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
-                <div className="flex items-center gap-2 mt-4 text-primary">
-                  <CheckCircle2 className="h-5 w-5" />
-                  <span className="text-sm font-medium">Automated & Efficient</span>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary/10 mb-2 sm:mb-4">{item.step}</div>
+                <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3">{item.title}</h3>
+                <p className="text-sm sm:text-base text-muted-foreground">{item.description}</p>
+                <div className="flex items-center gap-2 mt-3 sm:mt-4 text-primary">
+                  <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span className="text-xs sm:text-sm font-medium">Automated & Efficient</span>
                 </div>
               </div>
             ))}
@@ -261,34 +261,34 @@ const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-32">
+      <section className="py-12 sm:py-20 lg:py-32">
         <div className="container mx-auto px-4">
           <Card className="bg-gradient-to-br from-primary to-primary-glow text-primary-foreground">
-            <CardContent className="p-12 text-center space-y-6">
-              <h2 className="text-3xl md:text-5xl font-bold">
+            <CardContent className="p-6 sm:p-8 md:p-12 text-center space-y-4 sm:space-y-6">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold">
                 Ready to Protect Your Institution?
               </h2>
-              <p className="text-xl opacity-90 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
                 Start analyzing your transaction data with our powerful fraud detection
                 platform today.
               </p>
-              <div className="pt-4 flex gap-4 justify-center">
+              <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <Button
                   size="lg"
                   variant="secondary"
                   asChild
-                  className="text-lg h-12 px-8"
+                  className="text-base sm:text-lg h-11 sm:h-12 px-6 sm:px-8 w-full sm:w-auto"
                 >
                   <Link to="/login">
                     View Live Dashboard
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   asChild
-                  className="text-lg h-12 px-8 bg-primary/10 hover:bg-primary/20"
+                  className="text-base sm:text-lg h-11 sm:h-12 px-6 sm:px-8 bg-primary/10 hover:bg-primary/20 w-full sm:w-auto"
                 >
                   <Link to="/predict">
                     Try Prediction
@@ -301,40 +301,31 @@ const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t bg-card py-12">
+      <footer className="border-t bg-card py-8 sm:py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            <div className="space-y-3 sm:space-y-4 sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-2">
-                <Shield className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold">PTI System</span>
+                <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                <span className="text-lg sm:text-xl font-bold">PTI System</span>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Advanced predictive transaction intelligence for BFSI institutions.
               </p>
             </div>
-            
+
             <div>
-              <h3 className="font-semibold mb-4">Product</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Product</h3>
+              <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
                 <li><Link to="/login" className="hover:text-primary transition-colors">Dashboard</Link></li>
                 <li><Link to="/predict" className="hover:text-primary transition-colors">Fraud Prediction</Link></li>
                 <li><a href="#features" className="hover:text-primary transition-colors">Features</a></li>
                 <li><a href="http://localhost:8000/docs" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">API Docs</a></li>
               </ul>
             </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">Team</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>Team Predictive Intelligence</li>
-                <li>BFSI Fraud Detection</li>
-                <li>Milestone 1: Data Visualization</li>
-              </ul>
-            </div>
           </div>
-          
-          <div className="border-t pt-8 text-center text-sm text-muted-foreground">
+
+          <div className="border-t pt-6 sm:pt-8 text-center text-xs sm:text-sm text-muted-foreground">
             <p>© 2025 Predictive Transaction Intelligence. All rights reserved.</p>
           </div>
         </div>

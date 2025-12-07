@@ -45,22 +45,22 @@ const MonitoringWall = () => {
       title="Real-time Monitoring"
       subtitle="Live transaction stream and alert feed"
       actions={
-        <div className="flex gap-2 items-center">
-          <Badge variant={autoRefresh ? "default" : "outline"} className="cursor-pointer" onClick={() => setAutoRefresh(!autoRefresh)}>
-            {autoRefresh ? "Auto-refresh ON" : "Auto-refresh OFF"}
+        <div className="flex gap-2 items-center w-full sm:w-auto">
+          <Badge variant={autoRefresh ? "default" : "outline"} className="cursor-pointer text-[10px] sm:text-xs" onClick={() => setAutoRefresh(!autoRefresh)}>
+            {autoRefresh ? "Auto ON" : "Auto OFF"}
           </Badge>
           <Button size="sm" onClick={() => {
             alertsQuery.refetch();
             transactionsQuery.refetch();
             healthQuery.refetch();
-          }}>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Refresh
+          }} className="flex-1 sm:flex-none">
+            <RefreshCw className="sm:mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Refresh</span>
           </Button>
         </div>
       }
     >
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
         <MetricCard
           title="Active Alerts"
           value={alerts.length}
@@ -94,58 +94,57 @@ const MonitoringWall = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bell className="h-5 w-5" />
+          <CardHeader className="pb-2 sm:pb-6">
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
               Alert Stream
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="h-[500px] pr-4">
-              <div className="space-y-3">
+            <ScrollArea className="h-[300px] sm:h-[500px] pr-2 sm:pr-4">
+              <div className="space-y-2 sm:space-y-3">
                 {alerts.map((alert: any, index: number) => (
                   <div
                     key={`${alert.alert_id}-${index}`}
-                    className={`p-4 rounded-lg border-l-4 ${
-                      alert.severity === "critical"
-                        ? "border-l-red-500 bg-red-50"
-                        : alert.severity === "high"
-                        ? "border-l-orange-500 bg-orange-50"
-                        : "border-l-yellow-500 bg-yellow-50"
-                    }`}
+                    className={`p-2 sm:p-4 rounded-lg border-l-4 ${alert.severity === "critical"
+                      ? "border-l-red-500 bg-red-500/10 dark:bg-red-950/30"
+                      : alert.severity === "high"
+                        ? "border-l-orange-500 bg-orange-500/10 dark:bg-orange-950/30"
+                        : "border-l-yellow-500 bg-yellow-500/10 dark:bg-yellow-950/30"
+                      }`}
                   >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <Badge variant={alert.severity === "critical" ? "destructive" : "default"}>
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1 sm:gap-2 mb-1 flex-wrap">
+                          <Badge variant={alert.severity === "critical" ? "destructive" : "default"} className="text-[10px] sm:text-xs">
                             {alert.severity.toUpperCase()}
                           </Badge>
-                          <span className="text-xs text-muted-foreground">{alert.alert_id}</span>
+                          <span className="text-[10px] sm:text-xs text-foreground/70 truncate">{alert.alert_id}</span>
                         </div>
-                        <p className="font-semibold">{alert.type}</p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="font-semibold text-sm sm:text-base text-foreground">{alert.type}</p>
+                        <p className="text-xs sm:text-sm text-foreground/80 mt-1 truncate">
                           TXN: {alert.transaction_id} • ₹{(alert.amount || 0).toLocaleString()} • {alert.channel || 'N/A'}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-[10px] sm:text-xs text-foreground/70 mt-1">
                           Risk: {((alert.fraud_probability || 0) * 100).toFixed(1)}%
                         </p>
                       </div>
-                      <div className="text-right">
-                        <Badge variant="outline">{alert.status}</Badge>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          <Clock className="inline h-3 w-3" /> {new Date(alert.timestamp).toLocaleTimeString()}
+                      <div className="text-left sm:text-right shrink-0">
+                        <Badge variant="outline" className="text-[10px] sm:text-xs">{alert.status}</Badge>
+                        <p className="text-[10px] sm:text-xs text-foreground/70 mt-1">
+                          <Clock className="inline h-2.5 w-2.5 sm:h-3 sm:w-3" /> {new Date(alert.timestamp).toLocaleTimeString()}
                         </p>
                       </div>
                     </div>
                     {alert.status === "new" && (
-                      <div className="mt-3 flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => toast.info("Investigating alert")}>
+                      <div className="mt-2 sm:mt-3 flex gap-2">
+                        <Button size="sm" variant="outline" onClick={() => toast.info("Investigating alert")} className="text-xs h-7 sm:h-8">
                           Investigate
                         </Button>
-                        <Button size="sm" variant="ghost" onClick={() => toast.success("Alert acknowledged")}>
-                          Acknowledge
+                        <Button size="sm" variant="ghost" onClick={() => toast.success("Alert acknowledged")} className="text-xs h-7 sm:h-8">
+                          Ack
                         </Button>
                       </div>
                     )}
@@ -157,25 +156,26 @@ const MonitoringWall = () => {
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Activity className="h-5 w-5" />
+          <CardHeader className="pb-2 sm:pb-6">
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Activity className="h-4 w-4 sm:h-5 sm:w-5" />
               Live Transactions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="h-[500px] pr-4">
-              <div className="space-y-3">
+            <ScrollArea className="h-[300px] sm:h-[500px] pr-2 sm:pr-4">
+              <div className="space-y-2 sm:space-y-3">
                 {transactions.map((txn: any, index: number) => (
                   <div
                     key={`${txn.transaction_id}-${index}`}
-                    className={`p-3 rounded-lg border ${
-                      txn.status === "flagged" ? "border-red-200 bg-red-50" : "border-gray-200"
-                    }`}
+                    className={`p-2 sm:p-3 rounded-lg border ${txn.status === "flagged"
+                      ? "border-red-500/50 bg-red-500/10 dark:bg-red-950/30"
+                      : "border-border bg-muted/30"
+                      }`}
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-sm">{txn.transaction_id}</span>
-                      <Badge variant={txn.status === "flagged" ? "destructive" : "default"}>
+                    <div className="flex items-center justify-between mb-1 sm:mb-2">
+                      <span className="font-mono text-xs sm:text-sm truncate">{txn.transaction_id}</span>
+                      <Badge variant={txn.status === "flagged" ? "destructive" : "default"} className="text-[10px] sm:text-xs">
                         {txn.status}
                       </Badge>
                     </div>

@@ -8,10 +8,10 @@ const SignInPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Shield className="h-6 w-6 text-primary" />
-            <span className="font-bold text-lg">TransIntelliFlow</span>
+            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+            <span className="font-bold text-base sm:text-lg">TransIntelliFlow</span>
           </Link>
           <div className="flex items-center gap-3">
             <ThemeToggle />
@@ -20,11 +20,11 @@ const SignInPage = () => {
       </header>
 
       {/* Main Content */}
-      <main className="pt-24 pb-12 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-md mx-auto px-4">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">
+      <main className="pt-20 sm:pt-24 pb-8 sm:pb-12 flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-md mx-auto px-3 sm:px-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Welcome Back</h1>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Sign in to access your fraud detection dashboard
             </p>
           </div>

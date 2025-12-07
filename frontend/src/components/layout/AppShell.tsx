@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { UserButton, useUser } from "@clerk/clerk-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   LayoutDashboard,
   LineChart,
@@ -22,6 +23,7 @@ import {
   Activity,
   History,
   BarChart3,
+  Menu,
 } from "lucide-react";
 
 interface AppShellProps {
@@ -58,6 +60,7 @@ const NAV_ITEMS: NavItem[] = [
 const AppShell = ({ title, subtitle, actions, children }: AppShellProps) => {
   const location = useLocation();
   const { user, isLoaded } = useUser();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Get user's role from Clerk metadata (default to "User" if not set)
   const userRole = (user?.publicMetadata?.role as string) || "User";
@@ -67,7 +70,7 @@ const AppShell = ({ title, subtitle, actions, children }: AppShellProps) => {
     return item.roles.includes(userRole);
   });
 
-  const renderNavContent = () => (
+  const renderNavContent = (onItemClick?: () => void) => (
     <div className="space-y-1">
       {navItems.map((item) => {
         const Icon = item.icon;
@@ -76,30 +79,69 @@ const AppShell = ({ title, subtitle, actions, children }: AppShellProps) => {
           <Link
             key={item.path}
             to={item.path}
+            onClick={onItemClick}
             className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
               active ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-primary hover:bg-primary/5"
             )}
           >
-            <Icon className="h-4 w-4" />
-            <span>{item.label}</span>
+            <Icon className="h-4 w-4 flex-shrink-0" />
+            <span className="truncate">{item.label}</span>
           </Link>
         );
       })}
     </div>
   );
 
+  // User profile section for sidebar
+  const renderUserSection = () => (
+    <div className="px-4 py-4 border-t space-y-3">
+      <div className="flex items-center gap-3">
+        <UserButton
+          afterSignOutUrl="/"
+          showName={false}
+          appearance={{
+            elements: {
+              userButtonAvatarBox: "h-10 w-10 ring-2 ring-primary/20",
+              userButtonTrigger: "focus:shadow-none",
+              userButtonPopoverCard: "bg-card border border-border shadow-xl rounded-xl",
+              userButtonPopoverActions: "bg-card",
+              userButtonPopoverActionButton: "text-foreground hover:bg-muted rounded-lg",
+              userButtonPopoverActionButtonText: "text-foreground font-medium",
+              userButtonPopoverFooter: "hidden",
+            }
+          }}
+        />
+        <div className="flex-1 min-w-0">
+          {isLoaded && user ? (
+            <>
+              <p className="text-sm font-semibold text-foreground truncate">{user.fullName || user.username || "User"}</p>
+              <Badge variant="outline" className="mt-1 text-xs">{userRole}</Badge>
+            </>
+          ) : (
+            <p className="text-sm text-muted-foreground">Loading...</p>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+        <span className="text-xs text-muted-foreground">Toggle theme</span>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-muted/20 text-foreground flex">
-      <aside className="hidden lg:flex w-64 flex-col border-r bg-background/95">
+      {/* Desktop Sidebar */}
+      <aside className="hidden lg:flex w-64 flex-col border-r bg-background/95 flex-shrink-0">
         <div className="px-4 py-6">
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-primary/10 p-2">
               <ShieldCheck className="h-6 w-6 text-primary" />
             </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">TransIntelliFlow</p>
-              <p className="text-lg font-bold">Control Center</p>
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-muted-foreground truncate">TransIntelliFlow</p>
+              <p className="text-lg font-bold truncate">Control Center</p>
             </div>
           </div>
         </div>
@@ -107,143 +149,58 @@ const AppShell = ({ title, subtitle, actions, children }: AppShellProps) => {
         <ScrollArea className="flex-1 px-4 py-4">
           {renderNavContent()}
         </ScrollArea>
-        <div className="px-4 py-4 text-sm text-muted-foreground">
-          {isLoaded && user ? (
-            <>
-              <p>Logged in as</p>
-              <p className="font-semibold text-foreground">{user.fullName || user.username || "User"}</p>
-              <Badge variant="outline" className="mt-2 w-fit">{userRole}</Badge>
-            </>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
+        {renderUserSection()}
       </aside>
 
-      <div className="flex-1 flex flex-col">
-        <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex flex-col gap-4 px-4 py-4 lg:px-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">Operational Intelligence</p>
-                <h1 className="text-2xl font-bold">{title}</h1>
-                {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-              </div>
-              <div className="flex items-center gap-3">
-                <ThemeToggle />
-                {actions}
-                <UserButton 
-                  afterSignOutUrl="/"
-                  showName={false}
-                  appearance={{
-                    elements: {
-                      // Avatar styling
-                      userButtonAvatarBox: "h-9 w-9 ring-2 ring-primary/20 hover:ring-primary/40 transition-all",
-                      userButtonTrigger: "focus:shadow-none focus:ring-2 focus:ring-primary/50",
-                      // Popover card styling
-                      userButtonPopoverCard: "bg-card border border-border shadow-xl rounded-xl",
-                      userButtonPopoverActions: "bg-card",
-                      userButtonPopoverActionButton: "text-foreground hover:bg-muted rounded-lg transition-colors",
-                      userButtonPopoverActionButtonText: "text-foreground font-medium",
-                      userButtonPopoverActionButtonIcon: "text-muted-foreground",
-                      userButtonPopoverFooter: "hidden",
-                      // User preview section
-                      userPreviewMainIdentifier: "text-foreground font-semibold",
-                      userPreviewSecondaryIdentifier: "text-muted-foreground text-sm",
-                    }
-                  }}
-                  userProfileMode="modal"
-                  userProfileProps={{
-                    appearance: {
-                      elements: {
-                        // Modal container
-                        modalContent: "bg-card border-border",
-                        modalCloseButton: "text-muted-foreground hover:text-foreground hover:bg-muted",
-                        // Card and page styling
-                        card: "bg-card shadow-none border-0",
-                        rootBox: "bg-card",
-                        pageScrollBox: "bg-card",
-                        page: "bg-card",
-                        // Navbar styling
-                        navbar: "bg-muted/50 border-r border-border",
-                        navbarButton: "text-foreground hover:bg-muted/80 rounded-lg transition-colors",
-                        navbarButtonActive: "bg-primary/10 text-primary font-medium",
-                        navbarButtonIcon: "text-muted-foreground",
-                        // Profile section
-                        profileSectionTitle: "text-foreground font-semibold border-b border-border pb-2",
-                        profileSectionTitleText: "text-foreground text-lg",
-                        profileSectionContent: "bg-card",
-                        profileSectionPrimaryButton: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm font-medium",
-                        // Form elements
-                        formButtonPrimary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm font-medium transition-all",
-                        formButtonReset: "text-muted-foreground hover:text-foreground hover:bg-muted transition-colors",
-                        formFieldLabel: "text-foreground font-medium",
-                        formFieldInput: "bg-background border-border text-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary",
-                        formFieldInputShowPasswordButton: "text-muted-foreground hover:text-foreground",
-                        // Accordion and action cards
-                        accordionTriggerButton: "text-foreground hover:bg-muted/50 rounded-lg",
-                        accordionContent: "bg-card",
-                        actionCard: "bg-muted/30 border border-border rounded-lg hover:bg-muted/50 transition-colors",
-                        // Badges and alerts
-                        badge: "bg-primary/10 text-primary border-primary/20 font-medium",
-                        alertText: "text-foreground",
-                        // Header elements
-                        headerTitle: "text-foreground font-bold text-xl",
-                        headerSubtitle: "text-muted-foreground",
-                        // User info section
-                        userPreviewMainIdentifier: "text-foreground font-semibold",
-                        userPreviewSecondaryIdentifier: "text-muted-foreground",
-                        // Active devices section
-                        activeDeviceListItem: "bg-muted/30 border border-border rounded-lg",
-                        activeDeviceIcon: "text-muted-foreground",
-                        // Footer and breadcrumbs
-                        footer: "hidden",
-                        footerAction: "hidden",
-                        breadcrumbs: "text-muted-foreground",
-                        breadcrumbsItem: "text-foreground hover:text-primary transition-colors",
-                        breadcrumbsItemDivider: "text-muted-foreground",
-                        // Internal cards
-                        profilePage: "bg-card",
-                        accountSwitcherTrigger: "bg-muted/30 border-border hover:bg-muted/50",
-                        identityPreview: "bg-muted/20 rounded-lg p-3",
-                        identityPreviewEditButton: "text-primary hover:text-primary/80",
-                        // Connected accounts
-                        socialButtonsBlockButton: "bg-muted/30 border border-border text-foreground hover:bg-muted/50",
-                        socialButtonsBlockButtonText: "text-foreground font-medium",
-                        // Delete button (danger)
-                        formButtonReset__danger: "text-destructive hover:bg-destructive/10",
-                      }
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            <div className="lg:hidden">
-              <ScrollArea className="rounded-md border">
-                <div className="flex gap-2 px-4 py-2">
-                  {navItems.map((item) => {
-                    const active = location.pathname.startsWith(item.path);
-                    return (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className={cn(
-                          "whitespace-nowrap rounded-full px-4 py-1 text-xs font-medium",
-                          active ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                        )}
-                      >
-                        {item.label}
-                      </Link>
-                    );
-                  })}
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40">
+          <div className="flex items-center justify-between gap-3 px-3 py-2.5 sm:px-4 sm:py-3 lg:px-8">
+            {/* Mobile Menu Button */}
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="icon" className="flex-shrink-0 h-9 w-9">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-72 p-0">
+                <div className="flex flex-col h-full">
+                  <div className="px-4 py-6 border-b">
+                    <div className="flex items-center gap-3">
+                      <div className="rounded-lg bg-primary/10 p-2">
+                        <ShieldCheck className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">TransIntelliFlow</p>
+                        <p className="text-lg font-bold">Control Center</p>
+                      </div>
+                    </div>
+                  </div>
+                  <ScrollArea className="flex-1 px-4 py-4">
+                    {renderNavContent(() => setMobileMenuOpen(false))}
+                  </ScrollArea>
+                  {renderUserSection()}
                 </div>
-              </ScrollArea>
+              </SheetContent>
+            </Sheet>
+
+            {/* Title */}
+            <div className="flex-1 min-w-0">
+              <h1 className="text-base sm:text-xl lg:text-2xl font-bold truncate">{title}</h1>
+              {subtitle && <p className="text-[10px] sm:text-sm text-muted-foreground truncate hidden sm:block">{subtitle}</p>}
             </div>
+
+            {/* Actions Only */}
+            {actions && (
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {actions}
+              </div>
+            )}
           </div>
         </header>
 
-        <main className="flex-1 px-4 py-6 lg:px-8">
-          <div className="space-y-6">
+        <main className="flex-1 px-3 py-4 sm:px-4 sm:py-6 lg:px-8 overflow-x-hidden">
+          <div className="space-y-4 sm:space-y-6">
             {children}
           </div>
         </main>

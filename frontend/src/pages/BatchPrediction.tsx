@@ -100,15 +100,15 @@ const BatchPredictionPage = () => {
       title="Batch Predictions"
       subtitle="Upload large volumes for bulk inference"
       actions={
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={handleDownloadTemplate}>
-            <Download className="mr-2 h-4 w-4" />
-            Template
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" size="sm" onClick={handleDownloadTemplate} className="flex-1 sm:flex-none">
+            <Download className="sm:mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Template</span>
           </Button>
           {result && (
-            <Button size="sm" variant="secondary" onClick={handleDownloadResults}>
-              <FileDown className="mr-2 h-4 w-4" />
-              Results CSV
+            <Button size="sm" variant="secondary" onClick={handleDownloadResults} className="flex-1 sm:flex-none">
+              <FileDown className="sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Results CSV</span>
             </Button>
           )}
         </div>
@@ -156,28 +156,28 @@ const BatchPredictionPage = () => {
       </Card>
 
       {result && summary && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Total Records</CardTitle>
+            <CardHeader className="pb-2 sm:pb-6">
+              <CardTitle className="text-sm sm:text-base">Total Records</CardTitle>
             </CardHeader>
-            <CardContent className="text-3xl font-bold">
+            <CardContent className="text-xl sm:text-3xl font-bold">
               {result.total_records.toLocaleString()}
             </CardContent>
           </Card>
           <Card>
-            <CardHeader>
-              <CardTitle>Fraudulent Predictions</CardTitle>
+            <CardHeader className="pb-2 sm:pb-6">
+              <CardTitle className="text-sm sm:text-base">Fraudulent</CardTitle>
             </CardHeader>
-            <CardContent className="text-3xl font-bold text-destructive">
+            <CardContent className="text-xl sm:text-3xl font-bold text-destructive">
               {result.fraudulent_predictions.toLocaleString()} ({summary.fraudRate}%)
             </CardContent>
           </Card>
           <Card>
-            <CardHeader>
-              <CardTitle>Avg Fraud Probability</CardTitle>
+            <CardHeader className="pb-2 sm:pb-6">
+              <CardTitle className="text-sm sm:text-base">Avg Probability</CardTitle>
             </CardHeader>
-            <CardContent className="text-3xl font-bold">
+            <CardContent className="text-xl sm:text-3xl font-bold">
               {summary.avgProbability}%
             </CardContent>
           </Card>
@@ -186,35 +186,35 @@ const BatchPredictionPage = () => {
 
       {result && (
         <Card>
-          <CardHeader>
-            <CardTitle>Batch Results</CardTitle>
+          <CardHeader className="pb-2 sm:pb-6">
+            <CardTitle className="text-base sm:text-lg">Batch Results</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
-              <Table>
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
+              <Table className="min-w-[500px]">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>#</TableHead>
-                    <TableHead>Transaction ID</TableHead>
-                    <TableHead>Prediction</TableHead>
-                    <TableHead>Fraud Probability</TableHead>
-                    <TableHead>Risk Level</TableHead>
-                    <TableHead>Confidence</TableHead>
+                    <TableHead className="text-xs sm:text-sm">#</TableHead>
+                    <TableHead className="text-xs sm:text-sm">Transaction ID</TableHead>
+                    <TableHead className="text-xs sm:text-sm">Prediction</TableHead>
+                    <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Probability</TableHead>
+                    <TableHead className="text-xs sm:text-sm">Risk</TableHead>
+                    <TableHead className="text-xs sm:text-sm hidden md:table-cell">Confidence</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {result.results.map((row) => (
                     <TableRow key={row.transaction_id}>
-                      <TableCell>{row.row}</TableCell>
-                      <TableCell className="font-mono">{row.transaction_id}</TableCell>
+                      <TableCell className="text-xs sm:text-sm">{row.row}</TableCell>
+                      <TableCell className="font-mono text-xs sm:text-sm truncate max-w-[100px]">{row.transaction_id}</TableCell>
                       <TableCell>
-                        <Badge variant={row.prediction === "Fraud" ? "destructive" : "default"}>
+                        <Badge variant={row.prediction === "Fraud" ? "destructive" : "default"} className="text-[10px] sm:text-xs">
                           {row.prediction}
                         </Badge>
                       </TableCell>
-                      <TableCell>{row.fraud_probability}%</TableCell>
-                      <TableCell>{row.risk_level}</TableCell>
-                      <TableCell>{row.confidence.toFixed(2)}%</TableCell>
+                      <TableCell className="text-xs sm:text-sm hidden sm:table-cell">{row.fraud_probability}%</TableCell>
+                      <TableCell className="text-xs sm:text-sm">{row.risk_level}</TableCell>
+                      <TableCell className="text-xs sm:text-sm hidden md:table-cell">{row.confidence.toFixed(1)}%</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

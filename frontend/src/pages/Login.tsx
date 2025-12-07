@@ -52,25 +52,25 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/10 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/10 flex items-center justify-center px-3 sm:px-4">
       {/* Theme Toggle - Top Right */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-50">
         <ThemeToggle />
       </div>
       
-      <Card className="w-full max-w-xl shadow-xl">
-        <CardHeader className="text-center space-y-3">
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-            <Shield className="h-7 w-7" />
+      <Card className="w-full max-w-xl shadow-xl mx-2 sm:mx-0">
+        <CardHeader className="text-center space-y-2 sm:space-y-3 px-4 sm:px-6 pt-4 sm:pt-6">
+          <div className="mx-auto w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+            <Shield className="h-6 w-6 sm:h-7 sm:w-7" />
           </div>
           <div>
-            <CardTitle className="text-2xl">TransIntelliFlow Access</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-xl sm:text-2xl">TransIntelliFlow Access</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">
               Login with your employee credentials to access the control center
             </CardDescription>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <Label htmlFor="username">Full Name</Label>

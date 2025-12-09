@@ -1,80 +1,66 @@
-# Git
-.git
-.gitignore
+# Docker build context exclusions
+# Keeps only essential files for production API
 
-# Python
+# Git and version control
+.git/
+.gitignore
+*.md
+!README.md
+
+# Python cache and artifacts
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+*.egg-info/
+dist/
+build/
 venv/
 env/
 ENV/
 myenv/
-*.egg-info/
-dist/
-build/
-.pytest_cache/
-.tox/
-.coverage
-htmlcov/
 
-# Jupyter Notebook
-.ipynb_checkpoints/
-notebooks/
-*.ipynb
+# Development files
+.env*
+.vscode/
+.idea/
+*.swp
+*.swo
 
-# Data files (these should be in external storage, not in the container)
+# Data files (use external storage)
 data/
 *.csv
 *.xlsx
 *.db
 *.sqlite
 
-# Large model files in outputs (keep only needed models)
+# Notebooks and analysis
+notebooks/
+*.ipynb
+.ipynb_checkpoints/
+
+# Large output files (keep only models)
 outputs/eda_reports/
 outputs/logs/
 outputs/models/
-Model_Comparison/
-
-# Keep outputs/all_models for the trained models
 !outputs/all_models/
 
-# IDE and Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-*.vim
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Environment files
-.env
-.env.local
-.env.example
-
-# Documentation (not needed at runtime)
+# Documentation and tests
 docs/
-*.md
-!README.md
-
-# Test files
 tests/
 tools/
-
-# Scripts not needed for production
 scripts/
 
-# Form HTML (not needed for API)
-Form.html
+# Other project files
+Agile\ Docs/
+Model_Comparison/
+final_fraud_model/
 
-# Development requirements
+# Alternative requirements files
 requirements.txt
+requirements-render.txt
+
+# Railway config files (not needed in container)
+railway-start.sh
+render.yaml

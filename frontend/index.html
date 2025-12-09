@@ -20,9 +20,14 @@
     <script>
       // Prevent flash of unstyled content - Apply theme before page renders
       (function() {
-        const theme = localStorage.getItem('theme') || 
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.classList.add(theme);
+        try {
+          const theme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.classList.add(theme);
+        } catch (e) {
+          // Storage not available, default to light theme
+          document.documentElement.classList.add('light');
+        }
       })();
     </script>
 
